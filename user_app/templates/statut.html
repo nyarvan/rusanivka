@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Статут
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Статут</h1>
+              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна <i class="ion-ios-arrow-forward"></i></a></span> <span> <a href=""> Документи <i class="ion-ios-arrow-forward"></i></a></span> <span>  Статут</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+			<div class="container">
+				<div class="row">
+          <div class="col-lg-8 ftco-animate">
+            <h2 class="mb-3">Статут нова редакція від 16.12.2021 р.</h2>
+            <p>
+                <div class="viewer-pdf">
+                    <iframe src="{% static 'files/statut.pdf' %}" width="700" height="700"></iframe>
+                </div>
+            </p>
+          </div> <!-- .col-md-8 -->
+
+          <div class="col-lg-4 sidebar ftco-animate">
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Останні новини</h3>
+                {% for item in news %}
+              <div class="block-21 mb-4 d-flex">
+                <a href="{% url 'user_app:blog_single_view' slug=item.slug %}" class="blog-img mr-4" style="background-image: url({{ item.image.url }});"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=item.slug %}">{{ item.title }}</a></h3>
+                  <div class="meta">
+                    <div><span class="icon-calendar"></span> {{ item.create|date:'d.m.Y' }}</div>
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+            </div>
+          </div><!-- END COL -->
+        </div>
+			</div>
+		</section>
+{% endblock %}

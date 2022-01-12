@@ -1,0 +1,155 @@
+{% load static %}
+
+<!-- ============= Department Section ============= -->
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-2">
+          <div class="col-md-8 text-center heading-section ftco-animate">
+          	<span class="subheading">Амбулаторії</span>
+            <h2 class="mb-4">Амбулаторії загальної практики</h2>
+          </div>
+        </div>
+    		<div class="ftco-departments">
+					<div class="row">
+            <div class="col-md-12 nav-link-wrap">
+	            <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    {% for department in departments %}
+                        {% if forloop.first %}
+	              <a class="nav-link ftco-animate active" id="v-pills-{{ department.number }}-tab" data-toggle="pill" href="#v-pills-{{ department.number }}" role="tab" aria-controls="v-pills-{{ department.number }}" aria-selected="true">{{ department.name }}</a>
+                        {% else %}
+	              <a class="nav-link ftco-animate" id="v-pills-{{ department.number }}-tab" data-toggle="pill" href="#v-pills-{{ department.number }}" role="tab" aria-controls="v-pills-{{ department.number }}" aria-selected="false">{{ department.name }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+	            </div>
+	          </div>
+	          <div class="col-md-12 tab-wrap">
+
+	            <div class="tab-content bg-light p-4 p-md-5 ftco-animate" id="v-pills-tabContent">
+                    {% for department in departments %}
+                        {% if forloop.first %}
+	              <div class="tab-pane py-2 fade show active" id="v-pills-{{ department.number }}" role="tabpanel" aria-labelledby="day-{{ department.number }}-tab">
+	              	<div class="row departments">
+	              		<div class="col-lg-4 order-lg-last d-flex align-items-stretch">
+	              			<div class="img d-flex align-self-stretch" style="background-image: url({{ department.image.url }});"></div>
+	              		</div>
+	              		<div class="col-lg-8">
+	              			<h2>{{ department.full_name }} </h2>
+	              			<p><b>Завідувач</b> - {{ department.manager }}</p>
+	              			<p><b>Телефон реєстратури</b> - {{ department.phone }}</p>
+	              			<p><b>Адреса</b> - {{ department.address }}</p>
+											<div class="row mt-5 pt-2">
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-first-aid-kit"></span></div>
+														<div class="text">
+															<h3>Первинна медична допомога</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-dropper"></span></div>
+														<div class="text">
+															<h3>Лабораторні дослідження</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-experiment-results"></span></div>
+														<div class="text">
+															<h3>Діагностика</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><img src="{% static "images/vacination2.png" %}" height="36px" width="36px"></div>
+														<div class="text">
+															<h3>Вакцинація</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+
+	              		</div>
+
+	              	</div>
+                  {% if 'manager' in user.groups.all.0.name %}
+                            <div class="section-title text-center">
+                                <a href="{% url 'update_department' pk=department.pk %}">
+                                    <button type="button" class="btn btn-primary btn-sm">Оновити дані</button>
+                                </a>
+                            </div>
+                        {% endif %}
+	              </div>
+                        {% else %}
+	              <div class="tab-pane fade" id="v-pills-{{ department.number }}" role="tabpanel" aria-labelledby="v-pills-day-{{ department.number }}-tab">
+	              	<div class="row departments">
+	              		<div class="col-lg-4 order-lg-last d-flex align-items-stretch">
+	              			<div class="img d-flex align-self-stretch" style="background-image: url({{ department.image.url }});"></div>
+	              		</div>
+	              		<div class="col-md-8">
+	              			<h2>{{ department.full_name }}</h2>
+	              			<p><b>Завідувач</b> - {{ department.manager }}</p>
+	              			<p><b>Телефон реєстратури</b> - {{ department.phone }}</p>
+	              			<p><b>Адреса</b> - {{ department.address }}</p>
+											<div class="row mt-5 pt-2">
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-first-aid-kit"></span></div>
+														<div class="text">
+															<h3>Первинна медична допомога</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-dropper"></span></div>
+														<div class="text">
+															<h3>Лабораторні дослідження</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-experiment-results"></span></div>
+														<div class="text">
+															<h3>Діагностика</h3>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="services-2 d-flex">
+														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><img src="{% static "images/vacination2.png" %}" height="36px" width="36px"></div>
+														<div class="text">
+															<h3>Вакцинація</h3>
+														</div>
+													</div>
+												</div>
+											</div>
+	              		</div>
+	              	</div>
+                  {% if 'manager' in user.groups.all.0.name %}
+                            <div class="section-title text-center">
+                                <a href="{% url 'update_department' pk=department.pk %}">
+                                    <button type="button" class="btn btn-primary btn-sm">Оновити дані</button>
+                                </a>
+                            </div>
+                        {% endif %}
+	              </div>
+                        {% endif %}
+                    {% endfor %}
+	            </div>
+	          </div>
+	        </div>
+        </div>
+    	</div>
+            {% if 'manager' in user.groups.all.0.name %}
+                <div class="section-title text-center">
+                    <a href="{% url 'add_depart' %}"><img src="{% static 'images/plus.png' %}"></a>
+                </div>
+            {% endif %}
+    </section>
+    <!-- End Department Section -->

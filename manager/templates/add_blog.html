@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    Менеджер | Створення новини
+{% endblock %}
+
+{% block content%}
+    <section class="ftco-section contact-section">
+			<div class="container">
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                                        <div class="section-title text-center">
+                    <h3>Меню створення новини</h3>
+                </div>
+             <form method="post" role="form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <p><b>Заголовок: </b> {{ form.title }}</p>
+              </div>
+              <div class="form-group">
+                  <p><b>Фотографія:</b> {{ form.image }}</p>
+              </div>
+              <div class="form-group">
+                <p><b>Текст: </b> {{ form.text }}</p>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+					</div>
+				</div>
+			</div>
+		</section>
+{% endblock%}

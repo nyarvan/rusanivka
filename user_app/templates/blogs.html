@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Новини
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Новини</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна <i class="ion-ios-arrow-forward"></i></a></span> <span> Новини<i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row">
+                    {% for new in news %}
+                  <div class="col-md-4 ftco-animate">
+                    <div class="blog-entry">
+                      <a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="block-20" style="background-image: url({{ new.image.url }});">
+                                        <div class="meta-date text-center p-2">
+                          <span class="day">{{ new.create|date:'d.m.Y' }}</span>
+                        </div>
+                      </a>
+                      <div class="text bg-white p-4">
+                        <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}">{{ new.title }}</a></h3>
+                          {% if new.text %}
+                        <p>{{ new.text|slice:'100' }}...</p>
+                          {% endif %}
+                        <div class="d-flex align-items-center mt-4">
+                            <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    {% endfor %}
+        </div>
+        <div class="row no-gutters my-5">
+          <div class="col text-center">
+            <div class="block-27">
+              <ul>
+                  {% if news.has_previous%}
+                <li><a href="?page={{ news.previous_page_number }}"><i class="ion-ios-arrow-back"></i></a></li>
+                  {% endif %}
+              {% for page in news.paginator.page_range %}
+                  {% if page == news.number %}
+                <li class="active"><span>{{ page }}</span></li>
+                  {% else %}
+                <li><a href="?page={{ page }}">{{ page }}</a></li>
+                  {% endif %}
+              {% endfor %}
+              {% if news.has_next %}
+                <li><a href="?page={{ news.next_page_number }}"><i class="ion-ios-arrow-forward"></i></a></li>
+              {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+            {% if 'manager' in user.groups.all.0.name %}
+                <div class="section-title text-center">
+                    <a href="{% url 'add_blog' %}"><img src="{% static 'images/plus.png' %}"></a>
+                </div>
+            {% endif %}
+			</div>
+		</section>
+{% endblock %}

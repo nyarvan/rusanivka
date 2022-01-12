@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ЦПМСД Русанівка | {% block title %}Головна{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static "css/open-iconic-bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/animate.css" %}">
+    
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/ionicons.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/bootstrap-datepicker.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery.timepicker.css" %}">
+
+    
+    <link rel="stylesheet" href="{% static "css/flaticon.css" %}">
+    <link rel="stylesheet" href="{% static "css/icomoon.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+  <link rel="stylesheet" href="{% static "css/dropdownstyle.css" %}">
+  <link rel="stylesheet" href="{% static "css/pdf_style.css" %}">
+  </head>
+  <body>
+    <nav class="navbar py-4 navbar-expand-lg ftco_navbar navbar-light bg-light flex-row">
+    	<div class="container">
+    		<div class="row no-gutters d-flex align-items-start align-items-center px-3 px-md-0">
+    			<div class="col-lg-2 pr-4 align-items-center">
+		    		<a class="navbar-brand" href="{% url 'user_app:home_view' %}"><img src="{% static "images/logo.png" %}" height="100px" width="102px"></a>
+	    		</div>
+	    		<div class="col-lg-10 d-none d-md-block">
+		    		<div class="row d-flex">
+			    		<div class="col-md-4 pr-4 d-flex topper align-items-center">
+			    			<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-map"></span></div>
+                            <span class="text">Адреса: м. Київ, вул. Ентузіастів, 49</span>
+					    </div>
+					    <div class="col-md pr-4 d-flex topper align-items-center">
+					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
+						    <span class="text">Email: psl_rusanivka_golovna@ukr.net</span>
+					    </div>
+					    <div class="col-md pr-4 d-flex topper align-items-center">
+					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
+						    <span class="text">Телефон: +38(044)-295-39-49</span>
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+		  </div>
+    </nav>
+	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container d-flex align-items-center">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Меню
+	      </button>
+	      <p class="button-custom order-lg-last mb-0"><a href="https://patient.medcard24.net/" class="btn btn-secondary py-2 px-3">Запис на прийом</a></p>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav mr-auto">
+	        	<li class="nav-item"><a href="{% url 'user_app:home_view' %}" class="nav-link pl-0">ГОЛОВНА</a></li>
+	        	<li class="nav-item"><a href="{% url 'user_app:admin_view' %}" class="nav-link">АДМІНІСТРАЦІЯ</a></li>
+                <div class="dropdown">
+                  <button class="dropbtn">АМБУЛАТОРІЇ <img src="{% static 'images/down.png' %}"></button>
+                  <div class="dropdown-content">
+                    <a href="{% url 'user_app:ambulant_view' id=1 %}">АМБУЛАТОРІЯ №1</a>
+                    <a href="{% url 'user_app:ambulant_view' id=2 %}">АМБУЛАТОРІЯ №2</a>
+                    <a href="{% url 'user_app:ambulant_view' id=3 %}">АМБУЛАТОРІЯ №3</a>
+                      <a href="{% url 'user_app:ambulant_view' id=4 %}">СТОМАТОЛОГІЯ</a>
+                      <a href="{% url 'user_app:ambulant_view' id=5 %}">АКУШЕР-ГІНЕКОЛОГ</a>
+                  </div>
+                </div>
+	        	<li class="nav-item"><a href="" class="nav-link">ПОСЛУГИ</a></li>
+	        	<li class="nav-item"><a href="" class="nav-link">ВАКАНСІЇ</a></li>
+                <div class="dropdown">
+                  <button class="dropbtn">ДОКУМЕНТИ <img src="{% static 'images/down.png' %}"></button>
+                  <div class="dropdown-content">
+                    <a href="{% url 'user_app:document_view' %}">СТАТУТ</a>
+                  </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">НОВИНИ <img src="{% static 'images/down.png' %}"></button>
+                  <div class="dropdown-content">
+                      <a href="{% url 'user_app:blogs_view' %}">НОВИНИ</a>
+                      <a href="">ПУБЛІЧНІ ЗАКУПІВЛІ</a>
+                      <a href="">АНТИКОРУПЦІЙНА ПРОГРАМА</a>
+                  </div>
+                </div>
+	          <li class="nav-item"><a href="{% url 'user_app:contact_view' %}" class="nav-link">КОНТАКТИ</a></li>
+                {% if 'manager' in user.groups.all.0.name %}
+                <div class="dropdown">
+                    <button class="dropbtn">Менеджер <img src="{% static 'images/down.png' %}"></button>
+                  <div class="dropdown-content">
+                      <a href="{% url 'contact_list_view' %}">Зворотній зв'язок</a>
+                  </div>
+                </div>
+                {% endif %}
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    {% block content %}
+    {% endblock %}
+
+		
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-5">
+              <h2 class="ftco-heading-2 logo">ЦПМСД <span>Русанівка</span></h2>
+              <p>Комунальне некомерційне підприємство "Центр первинної медико-санітраної допомоги "Русанівка" Дніпровського району м. Києва"</p>
+            </div>
+            <div class="ftco-footer-widget mb-5">
+            	<h2 class="ftco-heading-2">Маєте запитання?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">м. Київ, вул. Ентузіастів, 49</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+38(044)-295-39-49</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">psl_rusanivka_golovna@ukr.net</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-5 ml-md-4">
+              <h2 class="ftco-heading-2">Посилання</h2>
+              <ul class="list-unstyled">
+                <li><a href="{% url 'user_app:home_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Головна</a></li>
+                <li><a href="{% url 'user_app:admin_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Адміністрація</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Послуги</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Вакансії</a></li>
+                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Документи</a></li>
+                  <li><a href="{% url 'user_app:document_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Статут</a></li>
+                <li><a href="{% url 'user_app:blogs_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Новини</a></li>
+                  <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Публічні закупівлі</a></li>
+                  <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Антикорупційна програма</a></li>
+                <li><a href="{% url 'user_app:contact_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Контакти</a></li>
+              </ul>
+            </div>
+            <div class="ftco-footer-widget mb-5 ml-md-4">
+              <h2 class="ftco-heading-2">Амбулаторії</h2>
+              <ul class="list-unstyled">
+                <li><a href="{% url 'user_app:ambulant_view' id=1 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №1</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=2 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №2</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=3 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №3</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=4 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Стоматологія</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=5 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Акушер-гінеколог</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-5">
+              <h2 class="ftco-heading-2">Останні новини</h2>
+                {% for blog in blogs %}
+              <div class="block-21 mb-4 d-flex">
+                <a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="blog-img mr-4" style="background-image: url({{ blog.image.url }});"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}">{{ blog.title }}</a></h3>
+                  <div class="meta">
+                      <div><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}"><span class="icon-calendar"></span> {{ blog.create|date:'d.m.Y' }}</a></div>
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+            </div>
+          </div>
+          <div class="col-md">
+          	<div class="ftco-footer-widget mb-5">
+            	<h2 class="ftco-heading-2">Графік</h2>
+            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Будні - 8.00-20.00</h3>
+            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Cубота - 9.00-15.00</h3>
+            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Неділя - 9.00-15.00 (вул. Митрополита Андрія Шептицького, 5)</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static "js/jquery.min.js" %}"></script>
+  <script src="{% static "js/jquery-migrate-3.0.1.min.js" %}"></script>
+  <script src="{% static "js/popper.min.js" %}"></script>
+  <script src="{% static "js/bootstrap.min.js" %}"></script>
+  <script src="{% static "js/jquery.easing.1.3.js" %}"></script>
+  <script src="{% static "js/jquery.waypoints.min.js" %}"></script>
+  <script src="{% static "js/jquery.stellar.min.js" %}"></script>
+  <script src="{% static "js/owl.carousel.min.js" %}"></script>
+  <script src="{% static "js/jquery.magnific-popup.min.js" %}"></script>
+  <script src="{% static "js/aos.js" %}"></script>
+  <script src="{% static "js/jquery.animateNumber.min.js" %}"></script>
+  <script src="{% static "js/bootstrap-datepicker.js" %}"></script>
+  <script src="{% static "js/jquery.timepicker.min.js" %}"></script>
+  <script src="{% static "js/scrollax.min.js" %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{% static "js/google-map.js" %}"></script>
+  <script src="{% static "js/main.js" %}"></script>
+  <script src="{% static "js/carousel.js" %}"></script>
+    
+  </body>
+</html>

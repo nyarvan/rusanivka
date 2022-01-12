@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Адміністрація
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">Адміністрація</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна <i class="ion-ios-arrow-forward"></i></a></span> <span> Адміністрація<i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row">
+                    {% for admin in admins %}
+                    <div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img-wrap d-flex align-items-stretch">
+                                    <div class="img align-self-stretch" style="background-image: url({{ admin.image.url }});"></div>
+							</div>
+							<div class="text pt-3 text-center">
+                                {% if 'manager' in user.groups.all.0.name %}
+                                    <a href="{% url 'update_admin' pk=admin.pk %}"><h3>{{ admin.name }}</h3></a>
+                                {% else %}
+                                    <h3>{{ admin.name }}</h3>
+                                {% endif %}
+								<span class="position mb-2">{{ admin.post }}</span>
+								<div class="faded">
+                                    <p><b>{{ admin.phone }}</b></p>
+									<p>{{ admin.schedule }}</p>
+	                            </div>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+				</div>
+                {% if 'manager' in user.groups.all.0.name %}
+                <div class="section-title text-center">
+                    <a href="{% url 'add_admin' %}"><img src="{% static 'images/plus.png' %}"></a>
+                </div>
+                {% endif %}
+			</div>
+		</section>
+{% endblock %}

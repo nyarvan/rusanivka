@@ -1,0 +1,11 @@
+@media screen and (max-width: 1135px) {
+    .viewer-pdf iframe{
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .viewer-pdf iframe{
+        width: 350px;
+    }
+}

@@ -1,0 +1,1 @@
+web: gunicorn rusanivka.wsgi --log-file -

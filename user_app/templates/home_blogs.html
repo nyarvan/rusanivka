@@ -1,0 +1,34 @@
+<!-- ============= Blogs Section ============= -->
+    <section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row justify-content-center mb-5 pb-2">
+          <div class="col-md-8 text-center heading-section ftco-animate">
+          	<span class="subheading">Новини</span>
+            <h2 class="mb-4">Останні Новини</h2>
+          </div>
+        </div>
+				<div class="row">
+                    {% for blog in blogs %}
+          <div class="col-md-4 ftco-animate">
+            <div class="blog-entry">
+              <a href="" class="block-20" style="background-image: url({{ blog.image.url }});">
+								<div class="meta-date text-center p-2">
+                  <span class="day">{{ blog.create|date:'d.m.Y' }}</span>
+                </div>
+              </a>
+              <div class="text bg-white p-4">
+                <h3 class="heading"><a href="#">{{ blog.title }}</a></h3>
+                  {% if blog.text %}
+                <p>{{ blog.text|slice:'200' }}....</p>
+                  {% endif %}
+                <div class="d-flex align-items-center mt-4">
+	                <p class="mb-0"><a href="#" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+                    {% endfor %}
+        </div>
+			</div>
+		</section>
+    <!-- End Blogs Section -->

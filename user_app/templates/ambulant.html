@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    {{ manager.department }}
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center">
+            <h1 class="mb-2 bread">{{ manager.department }}</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна <i class="ion-ios-arrow-forward"></i></a></span> <span> {{ manager.department }}<i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+			<div class="container">
+				<div class="row">
+                <div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img-wrap d-flex align-items-stretch">
+								<div class="img align-self-stretch" style="background-image: url({{ manager.image.url }});"></div>
+							</div>
+							<div class="text pt-3 text-center">
+                                {% if 'manager' in user.groups.all.0.name %}
+                                    <a href="{% url 'update_doctor' pk=manager.pk %}">
+                                        <h3>{{ manager.name }}</h3>
+                                    </a>
+                                {% else %}
+                                    <h3>{{ manager.name }}</h3>
+                                {% endif %}
+                                <span class="position mb-2">Завідувач {{ manager.department }}</span>
+								<span class="position mb-2">{{ manager.post }}</span>
+								<div class="faded">
+                                    <p><b>{{ manager.room }}</b></p>
+									<p>{{ manager.schedule }}</p>
+	                            </div>
+							</div>
+						</div>
+					</div>
+                    {% for doctor in doctors %}
+                    <div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img-wrap d-flex align-items-stretch">
+								<div class="img align-self-stretch" style="background-image: url({{ doctor.image.url }});"></div>
+							</div>
+							<div class="text pt-3 text-center">
+                                {% if 'manager' in user.groups.all.0.name %}
+                                    <a href="{% url 'update_doctor' pk=doctor.pk %}"><h3>{{ doctor.name }}</h3></a>
+                                {% else %}
+                                    <h3>{{ doctor.name }}</h3>
+                                {% endif %}
+								<span class="position mb-2">{{ doctor.post }}</span>
+								<div class="faded">
+                                    <p><b>{{ doctor.room }}</b></p>
+									<p>{{ doctor.schedule }}</p>
+	                            </div>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+				</div>
+            {% if 'manager' in user.groups.all.0.name %}
+                <div class="section-title text-center">
+                    <a href="{% url 'add_doctor' id=department.id %}"><img src="{% static 'images/plus.png' %}"></a>
+                </div>
+            {% endif %}
+            </div>
+		</section>
+                {% if 'manager' in user.groups.all.0.name %}
+        <section class="ftco-section">
+			<div class="container">
+                <div class="section-title text-center">
+                    <h3>Приховані лікарі</h3>
+                </div>
+                <div class="row">
+                    {% for doctor in unvisible_doctor %}
+                    <div class="col-md-6 col-lg-3 ftco-animate">
+						<div class="staff">
+							<div class="img-wrap d-flex align-items-stretch">
+								<div class="img align-self-stretch" style="background-image: url({{ doctor.image.url }});"></div>
+							</div>
+							<div class="text pt-3 text-center">
+                                {% if 'manager' in user.groups.all.0.name %}
+                                    <a href="{% url 'update_doctor' pk=doctor.pk %}"><h3>{{ doctor.name }}</h3></a>
+                                {% else %}
+                                    <h3>{{ doctor.name }}</h3>
+                                {% endif %}
+								<span class="position mb-2">{{ doctor.post }}</span>
+								<div class="faded">
+                                    <p><b>{{ doctor.room }}</b></p>
+									<p>{{ doctor.schedule }}</p>
+	                            </div>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+				</div>
+                {% endif %}
+        </div>
+		</section>
+
+{% endblock %}

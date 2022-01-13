@@ -6,6 +6,10 @@ register = template.Library()
 def split(value, splitter):
     return value.split(splitter)
 
+@register.filter(name='replace')
+def replace(value, replace):
+    return value.replace(replace, '')
+
 @register.filter(name="range")
 def _range(_min, args=None):
     _max, _step = None, None

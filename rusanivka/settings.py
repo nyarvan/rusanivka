@@ -99,7 +99,7 @@ DATABASES = {
 }
 
 db = dj_database_url.config()
-DATABASES['default'].update(db)
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 django_heroku.settings(locals(), staticfiles=False)
 

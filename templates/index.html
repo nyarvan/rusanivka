@@ -40,15 +40,15 @@
 	    		<div class="col-lg-10 d-none d-md-block">
 		    		<div class="row d-flex">
 			    		<div class="col-md-4 pr-4 d-flex topper align-items-center">
-			    			<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-map"></span></div>
+			    			<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><img src="{% static 'images/location.png' %}" height="50%" width="50%"></div>
                             <span class="text">Адреса: м. Київ, вул. Ентузіастів, 49</span>
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
-					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
+					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><img src="{% static 'images/paper-plane.png' %}" height="50%" width="50%"></div>
 						    <span class="text">Email: psl_rusanivka_golovna@ukr.net</span>
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
-					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
+					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><img src="{% static 'images/telephone.png' %}" height="50%" width="50%"></div>
 						    <span class="text">Телефон: +38(044)-295-39-49</span>
 					    </div>
 				    </div>
@@ -59,7 +59,7 @@
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container d-flex align-items-center">
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Меню
+	        Меню
 	      </button>
 	      <p class="button-custom order-lg-last mb-0"><a href="https://patient.medcard24.net/" class="btn btn-secondary py-2 px-3">Запис на прийом</a></p>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
@@ -123,9 +123,9 @@
             	<h2 class="ftco-heading-2">Маєте запитання?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">м. Київ, вул. Ентузіастів, 49</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+38(044)-295-39-49</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">psl_rusanivka_golovna@ukr.net</span></a></li>
+	                <li><span class="text">Адреса: <b>м. Київ, вул. Ентузіастів, 49</b></span></li>
+                      <li><span class="text">Тел: <b>+38(044)-295-39-49</b></span></li>
+                      <li><span class="text">Email: <b>psl_rusanivka_golovna@ukr.net</b></span></li>
 	              </ul>
 	            </div>
             </div>
@@ -134,26 +134,26 @@
             <div class="ftco-footer-widget mb-5 ml-md-4">
               <h2 class="ftco-heading-2">Посилання</h2>
               <ul class="list-unstyled">
-                <li><a href="{% url 'user_app:home_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Головна</a></li>
-                <li><a href="{% url 'user_app:admin_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Адміністрація</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Послуги</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Вакансії</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Документи</a></li>
-                  <li><a href="{% url 'user_app:document_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Статут</a></li>
-                <li><a href="{% url 'user_app:blogs_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Новини</a></li>
-                  <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Публічні закупівлі</a></li>
-                  <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Антикорупційна програма</a></li>
-                <li><a href="{% url 'user_app:contact_view' %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Контакти</a></li>
+                <li><a href="{% url 'user_app:home_view' %}">Головна</a></li>
+                <li><a href="{% url 'user_app:admin_view' %}">Адміністрація</a></li>
+                <li><a href="#">Послуги</a></li>
+                <li><a href="#">Вакансії</a></li>
+                <li><a href="#">Документи</a></li>
+                  <li><a href="{% url 'user_app:document_view' %}">Статут</a></li>
+                <li><a href="{% url 'user_app:blogs_view' %}">Новини</a></li>
+                  <li><a href="#">Публічні закупівлі</a></li>
+                  <li><a href="#">Антикорупційна програма</a></li>
+                <li><a href="{% url 'user_app:contact_view' %}">Контакти</a></li>
               </ul>
             </div>
             <div class="ftco-footer-widget mb-5 ml-md-4">
               <h2 class="ftco-heading-2">Амбулаторії</h2>
               <ul class="list-unstyled">
-                <li><a href="{% url 'user_app:ambulant_view' id=1 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №1</a></li>
-                <li><a href="{% url 'user_app:ambulant_view' id=2 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №2</a></li>
-                <li><a href="{% url 'user_app:ambulant_view' id=3 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Амбулаторія №3</a></li>
-                <li><a href="{% url 'user_app:ambulant_view' id=4 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Стоматологія</a></li>
-                <li><a href="{% url 'user_app:ambulant_view' id=5 %}"><span class="ion-ios-arrow-round-forward mr-2"></span>Акушер-гінеколог</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=1 %}">Амбулаторія №1</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=2 %}">Амбулаторія №2</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=3 %}">Амбулаторія №3</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=4 %}">Стоматологія</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=5 %}">Акушер-гінеколог</a></li>
               </ul>
             </div>
           </div>
@@ -166,7 +166,7 @@
                 <div class="text">
                   <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}">{{ blog.title }}</a></h3>
                   <div class="meta">
-                      <div><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}"><span class="icon-calendar"></span> {{ blog.create|date:'d.m.Y' }}</a></div>
+                      <div><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}"> {{ blog.create|date:'d.m.Y' }}</a></div>
                   </div>
                 </div>
               </div>
@@ -176,9 +176,9 @@
           <div class="col-md">
           	<div class="ftco-footer-widget mb-5">
             	<h2 class="ftco-heading-2">Графік</h2>
-            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Будні - 8.00-20.00</h3>
-            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Cубота - 9.00-15.00</h3>
-            	<h3 class="open-hours pl-4"><span class="ion-ios-time mr-3"></span>Неділя - 9.00-15.00 (вул. Митрополита Андрія Шептицького, 5)</h3>
+                <h3 class="open-hours pl-4"><img src="{% static 'images/time.png' %}" height="10%" width="10%"> Будні - 8.00-20.00</h3>
+            	<h3 class="open-hours pl-4"><img src="{% static 'images/time.png' %}" height="10%" width="10%"> Cубота - 9.00-15.00</h3>
+            	<h3 class="open-hours pl-4"><img src="{% static 'images/time.png' %}" height="10%" width="10%"> Неділя - 9.00-15.00 (вул. Митрополита Андрія Шептицького, 5)</h3>
             </div>
           </div>
         </div>

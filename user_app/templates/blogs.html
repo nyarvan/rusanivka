@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% load static %}
-
+{% load new_tags %}
 {% block title %}
     Новини
 {% endblock %}
@@ -32,7 +32,7 @@
                       <div class="text bg-white p-4">
                         <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}">{{ new.title }}</a></h3>
                           {% if new.text %}
-                        <p>{{ new.text|slice:'100' }}...</p>
+				<p>{{ new.text|slice:'100'|replace:'\n' }}...</p>
                           {% endif %}
                         <div class="d-flex align-items-center mt-4">
                             <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>

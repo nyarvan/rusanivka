@@ -1,3 +1,5 @@
+{% load new_tags %}
+
 <!-- ============= Blogs Section ============= -->
     <section class="ftco-section bg-light">
 			<div class="container">
@@ -11,18 +13,18 @@
                     {% for blog in blogs %}
           <div class="col-md-4 ftco-animate">
             <div class="blog-entry">
-              <a href="" class="block-20" style="background-image: url({{ blog.image.url }});">
+              <a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="block-20" style="background-image: url({{ blog.image.url }});">
 								<div class="meta-date text-center p-2">
                   <span class="day">{{ blog.create|date:'d.m.Y' }}</span>
                 </div>
               </a>
               <div class="text bg-white p-4">
-                <h3 class="heading"><a href="#">{{ blog.title }}</a></h3>
+                <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}">{{ blog.title }}</a></h3>
                   {% if blog.text %}
-                <p>{{ blog.text|slice:'200' }}....</p>
+                <p>{{ blog.text|slice:'200'|replace:'\n' }}....</p>
                   {% endif %}
                 <div class="d-flex align-items-center mt-4">
-	                <p class="mb-0"><a href="#" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>
+	                <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>
                 </div>
               </div>
             </div>

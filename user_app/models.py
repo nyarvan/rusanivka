@@ -97,7 +97,7 @@ class Blog(models.Model):
         super(Blog, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('user_app:blog_single_view', args=[self.id, self.slug], kwargs={'slug': self.slug})
+        return reverse('user_app:blog_single_view', args=[self.id, self.slug])
 
     def __str__(self):
         return f'{self.title}'

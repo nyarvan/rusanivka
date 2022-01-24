@@ -147,6 +147,13 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 # Extra places for collectstatic to find static files.
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, 'static'),
+#)
+
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+#MEDIAFILES_DIRS = (MEDIA_ROOT)
 
 STATIC_URL = AWS_URL + '/static/'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

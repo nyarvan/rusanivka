@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 from account.views import login_view, registration_view, logout_view
@@ -38,7 +39,8 @@ urlpatterns = [
 
     path('manager/', include('manager.urls')),
 
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 if settings.DEBUG:

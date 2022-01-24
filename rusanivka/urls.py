@@ -18,6 +18,15 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from account.views import login_view, registration_view, logout_view
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import StaticSitemap, DepartmentSitemap, DoctorSitemap, AdministrationSitemap
+
+sitemaps = {
+    'static': StaticSitemap,
+    'ambulants': DepartmentSitemap,
+    'doctor': DoctorSitemap,
+    'administration': AdministrationSitemap,
+}
 
 urlpatterns = [
     path('registration/', registration_view, name='registration'),
@@ -28,6 +37,8 @@ urlpatterns = [
     path('', include('user_app.urls', namespace='user_app')),
 
     path('manager/', include('manager.urls')),
+
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]
 
 if settings.DEBUG:

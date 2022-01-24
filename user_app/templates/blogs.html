@@ -12,7 +12,7 @@
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
             <h1 class="mb-2 bread">Новини</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна <i class="ion-ios-arrow-forward"></i></a></span> <span> Новини<i class="ion-ios-arrow-forward"></i></span></p>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна /</a></span><span>Новини</span></p>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
 				<p>{{ new.text|slice:'100'|replace:'\n' }}...</p>
                           {% endif %}
                         <div class="d-flex align-items-center mt-4">
-                            <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="btn btn-primary">Детальніше <span class="ion-ios-arrow-round-forward"></span></a></p>
+                            <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="btn btn-primary">Детальніше</a></p>
                         </div>
                       </div>
                     </div>

@@ -11,7 +11,7 @@
 
     {% for obj in departments %}
     <url>
-      <loc>{{ request.scheme }}://{{ request.get_host }}{{ obj.get_absolute_url }}</loc>
+      <loc>{{ request.scheme }}://{{ request.get_host }}</loc>
       <changefreq>weekly</changefreq>
       <priority>1.0</priority>
    </url>

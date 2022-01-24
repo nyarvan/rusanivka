@@ -25,6 +25,9 @@ class Department(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def get_absolute_url(self):
+        return reverse('', kwargs={'id': self.id})
+
 class Doctor(models.Model):
 
     def get_file_name(self, filename):
@@ -44,6 +47,9 @@ class Doctor(models.Model):
     class Meta:
         ordering = ('department', '-is_manager', 'is_visible')
 
+    def get_absolute_url(self):
+        return reverse('user_app:ambulant_view', kwargs={'id': self.id})
+
     def __str__(self):
         return f'{self.name}'
 
@@ -62,6 +68,9 @@ class Administration(models.Model):
 
     class Meta:
         ordering = ('position',)
+
+    def get_absolute_url(self):
+        return reverse('user_app:admin_view', kwargs={'id': self.id})
 
     def __str__(self):
         return f'{self.name}'
@@ -108,6 +117,9 @@ class BlogImage(models.Model):
 
     class Meta:
         ordering = ('-blog',)
+
+    def get_absolute_url(self):
+        return reverse('user_app:blog_single_view', kwargs={'id': self.id})
 
     def __str__(self):
         return f'{self.blog}'

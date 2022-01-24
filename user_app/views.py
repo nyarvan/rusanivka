@@ -1,7 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.base import TemplateView
 from .models import Department, Doctor, Administration, Blog, BlogImage, Document
 from django.core.paginator import Paginator
 from .forms import FormContact
+
+
+class SitemapXmlViews(TemplateView):
+    template_name = 'sitemapxml.html'
+    content_type = 'application/xml'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['departments'] = Department.objects.all()
+        context['doctors'] = Doctor.objects.filter(is_visible=True).order_by('department')
+        context['administrations'] = Administration.objects.all().order_by('position')
+        context['blogs'] = Blog.objects.all().order_by('-create')
+        context['blog_images'] = BlogImage.objects.all().order_by('blog')
+        return context
 
 def home_view(request):
     departments = Department.objects.all().order_by('number')
@@ -14,6 +29,7 @@ def home_view(request):
         'blogs': blogs,
     })
 
+
 def administration_view(request):
     admin = Administration.objects.all().order_by('position')
     blogs = Blog.objects.order_by('-create')[:3]
@@ -22,6 +38,7 @@ def administration_view(request):
         'admins': admin,
         'blogs': blogs,
     })
+
 
 def ambulant_view(request, id):
     manager = Doctor.objects.get(is_manager=True, department=id)
@@ -38,6 +55,7 @@ def ambulant_view(request, id):
         'unvisible_doctor': unvisible_doctors
     })
 
+
 def blogs_view(request):
 
     news = Blog.objects.all().order_by('-create')
@@ -52,6 +70,7 @@ def blogs_view(request):
         'news': news,
         'blogs': blogs,
     })
+
 
 def blog_single_view(request, slug):
     new = get_object_or_404(Blog, slug=slug)
@@ -68,6 +87,7 @@ def blog_single_view(request, slug):
         'images': images,
     })
 
+
 def contact_view(request):
     if request.method == 'POST':
         form = FormContact(request.POST)
@@ -82,12 +102,7 @@ def contact_view(request):
         'blogs': blogs,
     })
 
-def document_view(request):
-    blogs = Blog.objects.order_by('-create')[:3]
-    news = Blog.objects.order_by('-create')[:3]
 
-    return render(request, 'statut.html', context={
-        'blogs': blogs,
-        'news': news,
-    })
+def document_view(request):
+    pass
 

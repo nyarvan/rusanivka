@@ -15,19 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 from account.views import login_view, registration_view, logout_view
-from django.contrib.sitemaps.views import sitemap
-from .sitemaps import StaticSitemap, DepartmentSitemap, DoctorSitemap, AdministrationSitemap
 
-sitemaps = {
-    'static': StaticSitemap,
-    'ambulants': DepartmentSitemap,
-    'doctor': DoctorSitemap,
-    'administration': AdministrationSitemap,
-}
 
 urlpatterns = [
     path('registration/', registration_view, name='registration'),
@@ -38,9 +29,6 @@ urlpatterns = [
     path('', include('user_app.urls', namespace='user_app')),
 
     path('manager/', include('manager.urls')),
-
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 if settings.DEBUG:

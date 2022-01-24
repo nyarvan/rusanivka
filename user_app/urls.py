@@ -14,6 +14,6 @@ urlpatterns = [
     path('contact/', contact_view, name='contact_view'),
     path('documents/statut/', document_view, name='document_view'),
 
-    path('sitemap.xml', SitemapXmlViews.as_view),
+    path('sitemap.xml', SitemapXmlViews.as_view()),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]

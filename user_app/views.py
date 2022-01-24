@@ -18,6 +18,7 @@ class SitemapXmlViews(TemplateView):
         context['blog_images'] = BlogImage.objects.all().order_by('blog')
         return context
 
+
 def home_view(request):
     departments = Department.objects.all().order_by('number')
     doctors = Doctor.objects.filter(is_visible=True).order_by('?')[:4]

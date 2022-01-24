@@ -26,7 +26,7 @@ class Department(models.Model):
         return f'{self.name}'
 
     def get_absolute_url(self):
-        return reverse('', kwargs={'id': self.id})
+        return reverse('user_app:home_view', kwargs={'id': self.id})
 
 class Doctor(models.Model):
 

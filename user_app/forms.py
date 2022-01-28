@@ -1,6 +1,7 @@
 from django import forms
 from .models import Contact
 
+
 class FormContact(forms.ModelForm):
     name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
         'type': "text", 'name': "name", 'id': "name", 'class': "form-control", 'placeholder': "Введіть ім'я",

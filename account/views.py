@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .foms import UserLoginForm, UserRegistrationForms
 from django.contrib.auth import authenticate, login, logout
 
+
 def login_view(request):
     form = UserLoginForm(request.POST or None)
     next = request.GET.get('next')
@@ -19,9 +20,11 @@ def login_view(request):
         'form': form,
     })
 
+
 def logout_view(request):
     logout(request)
     return redirect('/')
+
 
 def registration_view(request):
     form = UserRegistrationForms(request.POST or None)

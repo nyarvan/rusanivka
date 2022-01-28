@@ -6,6 +6,7 @@ from .forms import FormContact
 
 
 class SitemapXmlViews(TemplateView):
+
     template_name = 'sitemapxml.html'
     content_type = 'application/xml'
 
@@ -20,6 +21,7 @@ class SitemapXmlViews(TemplateView):
 
 
 def home_view(request):
+
     departments = Department.objects.all().order_by('number')
     doctors = Doctor.objects.filter(is_visible=True).order_by('?')[:4]
     blogs = Blog.objects.all().order_by('-create')[:3]
@@ -32,6 +34,7 @@ def home_view(request):
 
 
 def administration_view(request):
+
     admin = Administration.objects.all().order_by('position')
     blogs = Blog.objects.order_by('-create')[:3]
 
@@ -42,6 +45,7 @@ def administration_view(request):
 
 
 def ambulant_view(request, id):
+
     manager = Doctor.objects.get(is_manager=True, department=id)
     doctors = Doctor.objects.filter(department=id, is_manager=False, is_visible=True).order_by('post')
     blogs = Blog.objects.order_by('-create')[:3]
@@ -74,15 +78,14 @@ def blogs_view(request):
 
 
 def blog_single_view(request, slug):
-    new = get_object_or_404(Blog, slug=slug)
-    images = BlogImage.objects.filter(blog=new.id)
 
-    i = 5
+    item = get_object_or_404(Blog, slug=slug)
+    images = BlogImage.objects.filter(blog=item.id)
 
     news = Blog.objects.order_by('-create')[:3]
 
     return render(request, 'blog_single.html', context={
-        'new': new,
+        'item': item,
         'news': news,
         'blogs': news,
         'images': images,
@@ -90,6 +93,7 @@ def blog_single_view(request, slug):
 
 
 def contact_view(request):
+
     if request.method == 'POST':
         form = FormContact(request.POST)
         if form.is_valid():
@@ -106,4 +110,3 @@ def contact_view(request):
 
 def document_view(request):
     pass
-

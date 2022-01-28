@@ -3,7 +3,9 @@ from django.contrib.auth import authenticate, get_user_model
 
 User = get_user_model()
 
+
 class UserRegistrationForms(forms.ModelForm):
+
     class Meta:
         model = User
         fields = ('username',)
@@ -23,6 +25,7 @@ class UserRegistrationForms(forms.ModelForm):
         if data['password'] != data['password2']:
             raise forms.ValidationError('Пароли не совпадают')
         return data['password']
+
 
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={

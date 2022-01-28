@@ -1,7 +1,9 @@
 from django import forms
 from user_app.models import Administration, Doctor, Department, Blog, BlogImage
 
+
 class FormAdministration(forms.ModelForm):
+
     name = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть ПІБ",
     }))
@@ -28,6 +30,7 @@ class FormAdministration(forms.ModelForm):
         model = Administration
         fields = ('name', 'position', 'image', 'post', 'schedule', 'phone')
 
+
 class FormDoctor(forms.ModelForm):
 
     name = forms.CharField(widget=forms.TextInput(attrs={
@@ -51,6 +54,7 @@ class FormDoctor(forms.ModelForm):
     class Meta:
         model = Doctor
         fields = ('department', 'name', 'image', 'post', 'room', 'schedule', 'is_manager', 'is_visible')
+
 
 class FormDepartment(forms.ModelForm):
 
@@ -84,7 +88,9 @@ class FormDepartment(forms.ModelForm):
         model = Department
         fields = ('name', 'full_name', 'number', 'manager', 'image', 'phone', 'address')
 
+
 class FormBlog(forms.ModelForm):
+
     title = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть заголовок",
     }))
@@ -99,7 +105,9 @@ class FormBlog(forms.ModelForm):
         model = Blog
         fields = ('title', 'image', 'text')
 
+
 class FormBlogImage(forms.ModelForm):
+
     blog = forms.ModelChoiceField(queryset=Blog.objects.all(), widget=forms.Select(attrs={
         'class': 'form-control'
     }))

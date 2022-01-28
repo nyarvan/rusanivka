@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from user_app.models import Contact, Blog, BlogImage
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import FormAdministration, FormDoctor, FormDepartment, FormBlog, FormBlogImage
-from user_app.models import Administration, Doctor, Department
+from user_app.models import Contact, Blog, BlogImage, Administration, Doctor, Department
+
 
 def is_manager(user):
     return user.groups.filter(name='manager').exists()
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -24,11 +25,13 @@ def contact_list_view(request):
         'contacts': contacts,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def update_contact(request, pk):
     Contact.objects.filter(pk=pk).update(is_processing=True)
     return redirect('contact_list_view')
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -42,6 +45,7 @@ def add_administration(request):
     return render(request, 'add_admin.html', context={
         'form': form_administration,
     })
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -57,6 +61,7 @@ def add_doctor(request, id):
         'department': department,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def add_department(request):
@@ -70,6 +75,7 @@ def add_department(request):
         'form': form_depart,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def add_blog(request):
@@ -82,6 +88,7 @@ def add_blog(request):
     return render(request, 'add_blog.html', context={
         'form': form_blog,
     })
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -99,6 +106,7 @@ def add_blog_image(request, slug):
         'form': form_blog_image,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def update_administration(request, pk):
@@ -114,6 +122,7 @@ def update_administration(request, pk):
         'form': form_admin,
         'admin': admin,
     })
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -131,6 +140,7 @@ def update_doctor(request, pk):
         'form': form_doctor,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def update_department(request, pk):
@@ -147,6 +157,7 @@ def update_department(request, pk):
         'form': form_depart,
     })
 
+
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
 def update_blog(request, pk):
@@ -162,6 +173,7 @@ def update_blog(request, pk):
         'blog': blog,
         'form': form_blog,
     })
+
 
 @login_required(login_url='/login/')
 @user_passes_test(is_manager)
@@ -180,11 +192,13 @@ def update_blog_image(request, slug, id):
         'form': form_blog_image,
     })
 
+
 @login_required(login_url="/login/")
 @user_passes_test(is_manager)
 def delete_administration(request, pk):
     Administration.objects.get(pk=pk).delete()
     return redirect('user_app:admin_view')
+
 
 @login_required(login_url="/login/")
 @user_passes_test(is_manager)
@@ -193,11 +207,13 @@ def delete_doctor(request, pk):
     doctor.delete()
     return redirect('user_app:ambulant_view', id=doctor.department.id)
 
+
 @login_required(login_url="/login/")
 @user_passes_test(is_manager)
 def delete_depart(request, pk):
     Department.objects.get(pk=pk).delete()
     return redirect('user_app:home_view')
+
 
 @login_required(login_url="/login/")
 @user_passes_test(is_manager)
@@ -205,6 +221,8 @@ def delete_blog(request, pk):
     Blog.objects.get(pk=pk).delete()
     return redirect('user_app:blogs_view')
 
+@login_required(login_url="/login/")
+@user_passes_test(is_manager)
 def delete_blog_image(request, id, slug):
     BlogImage.objects.get(id=id).delete()
     blog = Blog.objects.get(slug=slug)

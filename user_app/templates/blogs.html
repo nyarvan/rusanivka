@@ -47,7 +47,7 @@
             <div class="block-27">
               <ul>
                   {% if news.has_previous%}
-                <li><a href="?page={{ news.previous_page_number }}"><i class="ion-ios-arrow-back"></i></a></li>
+                <li><a href="?page={{ news.previous_page_number }}"><img src="{% static 'images/prev.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
                   {% endif %}
               {% for page in news.paginator.page_range %}
                   {% if page == news.number %}
@@ -57,7 +57,7 @@
                   {% endif %}
               {% endfor %}
               {% if news.has_next %}
-                <li><a href="?page={{ news.next_page_number }}"><i class="ion-ios-arrow-forward"></i></a></li>
+                <li><a href="?page={{ news.next_page_number }}"><img src="{% static 'images/next.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
               {% endif %}
               </ul>
             </div>

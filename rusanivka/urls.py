@@ -20,7 +20,7 @@ from django.conf import settings
 from account.views import login_view, registration_view, logout_view
 from django.views.generic.base import TemplateView
 from django.contrib.sitemaps.views import sitemap
-from sitemaps import StaticViewSitemap, DepartmentSitemap, BlogSitemap
+from .sitemaps import StaticViewSitemap, DepartmentSitemap, BlogSitemap
 
 
 urlpatterns = [

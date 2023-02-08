@@ -18,6 +18,9 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from account.views import login_view, registration_view, logout_view
+from django.views.generic.base import TemplateView
+from django.contrib.sitemaps.views import sitemap
+from sitemaps import StaticViewSitemap, DepartmentSitemap, BlogSitemap
 
 
 urlpatterns = [
@@ -27,8 +30,17 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('', include('user_app.urls', namespace='user_app')),
-
     path('manager/', include('manager.urls')),
+
+    path('sitemap.xml', sitemap, {
+        'sitemaps': {
+            'static': StaticViewSitemap,
+            'departments': DepartmentSitemap,
+            'blogs': BlogSitemap
+        }
+    }, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+
 ]
 
 if settings.DEBUG:

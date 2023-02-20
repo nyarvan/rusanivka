@@ -38,7 +38,7 @@ urlpatterns = [
             'departments': DepartmentSitemap,
             'blogs': BlogSitemap
         }
-    }, name='django.contrib.sitemaps.views.sitemap'),
+    }, name='django.contrib.sitemaps.views.sitemap1'),
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 
 ]

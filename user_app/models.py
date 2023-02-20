@@ -6,7 +6,7 @@ from pytils.translit import slugify
 
 
 class Department(models.Model):
-
+    
     name = models.CharField(max_length=50, db_index=True, unique=True)
     full_name = models.CharField(max_length=75, unique=True)
     number = models.PositiveIntegerField(unique=True)
@@ -22,7 +22,7 @@ class Department(models.Model):
         return f'{self.name}'
 
     def get_absolute_url(self):
-        return reverse('user_app:home_view', kwargs={'id': self.id})
+        return reverse('user_app:ambulant_view', kwargs={'id': self.id})
 
 
 class Doctor(models.Model):
@@ -40,7 +40,7 @@ class Doctor(models.Model):
         ordering = ('department', '-is_manager', 'is_visible')
 
     def get_absolute_url(self):
-        return reverse('user_app:ambulant_view', kwargs={'id': self.id})
+        return reverse('user_app:ambulant_view', kwargs={'id': self.department.id})
 
     def __str__(self):
         return f'{self.name}'

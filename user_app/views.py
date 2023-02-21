@@ -5,25 +5,10 @@ from django.core.paginator import Paginator
 from .forms import FormContact
 
 
-class SitemapXmlViews(TemplateView):
-
-    template_name = 'sitemapxml.html'
-    content_type = 'application/xml'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['departments'] = Department.objects.all()
-        context['doctors'] = Doctor.objects.filter(is_visible=True).order_by('department')
-        context['administrations'] = Administration.objects.all().order_by('position')
-        context['blogs'] = Blog.objects.all().order_by('-create')
-        context['blog_images'] = BlogImage.objects.all().order_by('blog')
-        return context
-
-
 def home_view(request):
 
     departments = Department.objects.all().order_by('number')
-    doctors = Doctor.objects.filter(is_visible=True).order_by('?')[:4]
+    doctors = Doctor.objects.filter(is_visible=True, is_manager=False).order_by('?')[:4]
     blogs = Blog.objects.all().order_by('-create')[:3]
 
     return render(request, 'home.html', context={

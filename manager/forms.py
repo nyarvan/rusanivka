@@ -97,7 +97,7 @@ class FormBlog(forms.ModelForm):
 
     image = forms.FileField(required=False)
 
-    text = forms.CharField(widget=forms.Textarea(attrs={
+    text = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'type': "text", 'class': "form-control", 'rows': "25", 'placeholder': "Введіть текст новини",
     }))
 

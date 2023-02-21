@@ -12,7 +12,7 @@ class FormAdministration(forms.ModelForm):
         'type': "number", 'class': "form-control", 'placeholder': "Введіть позицію",
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
 
     post = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть посаду",
@@ -37,7 +37,7 @@ class FormDoctor(forms.ModelForm):
         'type': "text", 'class': "form-control", 'placeholder': "Введіть ПІБ",
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
 
     post = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть посаду",
@@ -74,7 +74,7 @@ class FormDepartment(forms.ModelForm):
         'type': "text", 'class': "form-control", 'placeholder': "Введіть ПІБ завідувача",
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
 
     phone = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть номер телефону",
@@ -95,7 +95,7 @@ class FormBlog(forms.ModelForm):
         'type': "text", 'class': "form-control", 'placeholder': "Введіть заголовок",
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
 
     text = forms.CharField(widget=forms.Textarea(attrs={
         'type': "text", 'class': "form-control", 'rows': "25", 'placeholder': "Введіть текст новини",
@@ -112,7 +112,7 @@ class FormBlogImage(forms.ModelForm):
         'class': 'form-control'
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
 
     class Meta:
         model = BlogImage

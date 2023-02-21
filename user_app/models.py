@@ -11,7 +11,7 @@ class Department(models.Model):
     full_name = models.CharField(max_length=75, unique=True)
     number = models.PositiveIntegerField(unique=True)
     manager = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="images/departments")
+    image = models.ImageField(upload_to='images/departments', default='images/doctors/no-image.png')
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
 
@@ -29,7 +29,7 @@ class Doctor(models.Model):
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, db_index=True)
-    image = models.ImageField(upload_to="images/doctors")
+    image = models.ImageField(upload_to='images/doctors', default='images/doctors/no-image.png')
     post = models.CharField(max_length=100)
     room = models.CharField(max_length=50)
     schedule = models.TextField(blank=True)
@@ -50,7 +50,7 @@ class Administration(models.Model):
 
     name = models.CharField(max_length=50, db_index=True)
     position = models.PositiveIntegerField()
-    image = models.ImageField(upload_to="images/administration")
+    image = models.ImageField(upload_to='images/administration', default='images/doctors/no-image.png')
     post = models.CharField(max_length=50)
     schedule = models.TextField(blank=True)
     phone = models.CharField(max_length=25)
@@ -69,7 +69,7 @@ class Blog(models.Model):
 
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
-    image = models.ImageField(upload_to="images/blogs")
+    image = models.ImageField(upload_to='images/blogs', default='images/doctors/no-image.png')
     text = models.TextField(blank=True)
     create = models.DateTimeField(auto_now_add=True)
 
@@ -95,7 +95,7 @@ class BlogImage(models.Model):
         return length
 
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="images/blogs")
+    image = models.ImageField(upload_to='images/blogs', default='images/doctors/no-image.png')
 
     class Meta:
         ordering = ('-blog',)

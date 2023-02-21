@@ -8,7 +8,7 @@ from .forms import FormContact
 def home_view(request):
 
     departments = Department.objects.all().order_by('number')
-    doctors = Doctor.objects.filter(is_visible=True).order_by('?').distinct('name')[:4]
+    doctors = Doctor.objects.filter(is_visible=True).distinct('name')[:4]
     blogs = Blog.objects.all().order_by('-create')[:3]
 
     return render(request, 'home.html', context={

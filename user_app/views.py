@@ -59,8 +59,7 @@ class BlogDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        context['images'] = BlogImage.objects.filter(blog=self.get_object.id)
+        context['images'] = BlogImage.objects.filter(blog=self.get_object())
         return context
 
 

@@ -21,48 +21,50 @@
     <section class="ftco-section bg-light">
 			<div class="container">
 				<div class="row">
-                    {% for new in news %}
+                    {% for blog in blogs %}
                   <div class="col-md-4 ftco-animate">
                     <div class="blog-entry">
-                      <a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="block-20" style="background-image: url({{ new.image.url }});">
+                      <a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="block-20" style="background-image: url({{ blog.image.url }});">
                                         <div class="meta-date text-center p-2">
-                          <span class="day">{{ new.create|date:'d.m.Y' }}</span>
+                          <span class="day">{{ blog.create|date:'d.m.Y' }}</span>
                         </div>
                       </a>
                       <div class="text bg-white p-4">
-                        <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}">{{ new.title }}</a></h3>
-                          {% if new.text %}
-				<p>{{ new.text|slice:'100'|replace:'\n' }}...</p>
+                        <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}">{{ blog.title }}</a></h3>
+                          {% if blog.text %}
+				<p>{{ blog.text|slice:'100'|replace:'\n' }}...</p>
                           {% endif %}
                         <div class="d-flex align-items-center mt-4">
-                            <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=new.slug %}" class="btn btn-primary">Детальніше</a></p>
+                            <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="btn btn-primary">Детальніше</a></p>
                         </div>
                       </div>
                     </div>
                   </div>
                     {% endfor %}
         </div>
+        {% if page_obj.has_next or page_obj.has_previous %}
         <div class="row no-gutters my-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                  {% if news.has_previous%}
+                  {% if page_obj.has_previous%}
                 <li><a href="?page={{ news.previous_page_number }}"><img src="{% static 'images/prev.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
                   {% endif %}
-              {% for page in news.paginator.page_range %}
-                  {% if page == news.number %}
+              {% for page in page_obj.paginator.page_range %}
+                  {% if page == page_obj.number %}
                 <li class="active"><span>{{ page }}</span></li>
                   {% else %}
                 <li><a href="?page={{ page }}">{{ page }}</a></li>
                   {% endif %}
               {% endfor %}
-              {% if news.has_next %}
-                <li><a href="?page={{ news.next_page_number }}"><img src="{% static 'images/next.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
+              {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}"><img src="{% static 'images/next.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
               {% endif %}
               </ul>
             </div>
           </div>
         </div>
+        {% endif %}
             {% if 'manager' in user.groups.all.0.name %}
                 <div class="section-title text-center">
                     <a href="{% url 'add_blog' %}"><img src="{% static 'images/plus.png' %}"></a>

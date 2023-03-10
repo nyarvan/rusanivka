@@ -25,16 +25,16 @@
 						<form method="post">
                             {% csrf_token %}
               <div class="form-group">
-                {{ form_contact.name }}
+                {{ form.name }}
               </div>
               <div class="form-group">
-                {{ form_contact.email }}
+                {{ form.email }}
               </div>
               <div class="form-group">
-                {{ form_contact.subject }}
+                {{ form.subject }}
               </div>
               <div class="form-group">
-                {{ form_contact.message }}
+                {{ form.message }}
               </div>
               <div class="form-group">
                 <input type="submit" value="Надіслати повідомлення" class="btn btn-primary py-3 px-5">

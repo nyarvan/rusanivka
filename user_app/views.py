@@ -1,96 +1,76 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.base import TemplateView
-from .models import Department, Doctor, Administration, Blog, BlogImage, Document
-from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView, FormView
+from .models import Department, Doctor, Administration, Blog, BlogImage
 from .forms import FormContact
 
 
-def home_view(request):
+class HomepageView(ListView):
+    template_name = 'home.html'
+    context_object_name = 'departments'
 
-    departments = Department.objects.all().order_by('number')
-    doctors = Doctor.objects.filter(is_visible=True).order_by('name').distinct('name')[:4]
-    blogs = Blog.objects.all().order_by('-create')[:3]
+    def get_queryset(self):
+        return Department.objects.all().order_by('number')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return render(request, 'home.html', context={
-        'departments': departments,
-        'doctors': doctors,
-        'blogs': blogs,
-    })
-
-
-def administration_view(request):
-
-    admin = Administration.objects.all().order_by('position')
-    blogs = Blog.objects.order_by('-create')[:3]
-
-    return render(request, 'administration.html', context={
-        'admins': admin,
-        'blogs': blogs,
-    })
+        context['doctors'] = Doctor.objects.filter(is_visible=True, is_manager=False).order_by('?')[:4]
+        return context
 
 
-def ambulant_view(request, id):
+class AdministrationView(ListView):
+    template_name = 'administration.html'
+    context_object_name = 'admins'
 
-    manager = Doctor.objects.get(is_manager=True, department=id)
-    doctors = Doctor.objects.filter(department=id, is_manager=False, is_visible=True).order_by('post')
-    blogs = Blog.objects.order_by('-create')[:3]
-    department = Department.objects.get(id=id)
-    unvisible_doctors = Doctor.objects.filter(is_visible=False, department=id)
-
-    return render(request, 'ambulant.html', context={
-        'manager': manager,
-        'doctors': doctors,
-        'blogs': blogs,
-        'department': department,
-        'unvisible_doctor': unvisible_doctors
-    })
+    def get_queryset(self):
+        return Administration.objects.all().order_by('position')
 
 
-def blogs_view(request):
+class DepartmentView(ListView):
+    template_name = 'ambulant.html'
+    context_object_name = 'doctors'
 
-    news = Blog.objects.all().order_by('-create')
-    blogs = Blog.objects.order_by('-create')[:3]
+    def get_queryset(self):
+        return Doctor.objects.filter(department=id, is_manager=False, is_visible=True).order_by('post')
+    
+    def get_context_data(self, **kwargs):
+        id = self.kwargs.get('id')
+        context = super().get_context_data(**kwargs)
+        context['manager'] = Doctor.objects.get(is_manager=True, department=id)
+        context['department'] = get_object_or_404(Department, id=id)
+        context['unvisible_doctor'] = Doctor.objects.filter(is_visible=False, department=id)
+        return context
+    
 
-    paginator = Paginator(news, 6)
-    page = request.GET.get('page')
+class BlogsView(ListView):
+    template_name = 'blogs.html'
+    context_object_name = 'blogs'
+    paginate_by = 6
 
-    news = paginator.get_page(page)
+    def get_queryset(self):
+        return Blog.objects.all().order_by('-create')
+    
 
-    return render(request, 'blogs.html', context={
-        'news': news,
-        'blogs': blogs,
-    })
+class BlogDetailView(DetailView):
+    template_name = 'blog_single.html'
+    context_object_name = 'blog'
+    model = Blog
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-def blog_single_view(request, slug):
-
-    item = get_object_or_404(Blog, slug=slug)
-    images = BlogImage.objects.filter(blog=item.id)
-
-    news = Blog.objects.order_by('-create')[:3]
-
-    return render(request, 'blog_single.html', context={
-        'item': item,
-        'news': news,
-        'blogs': news,
-        'images': images,
-    })
+        context['images'] = BlogImage.objects.filter(blog=self.get_object.id)
+        return context
 
 
-def contact_view(request):
+class ContactView(FormView):
+    form_class = FormContact
+    template_name = 'contact.html'
+    success_url = ''
 
-    if request.method == 'POST':
-        form = FormContact(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("/")
-
-    form = FormContact()
-    blogs = Blog.objects.order_by('-create')[:3]
-    return render(request, 'contact.html', context={
-        'form_contact': form,
-        'blogs': blogs,
-    })
+    def form_valid(self, form):
+        form.save()
+        return super(ContactView, self).form_valid(form)
 
 
 def document_view(request):

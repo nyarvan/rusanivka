@@ -66,7 +66,7 @@ class BlogDetailView(DetailView):
 class ContactView(FormView):
     form_class = FormContact
     template_name = 'contact.html'
-    success_url = ''
+    success_url = '/'
 
     def form_valid(self, form):
         form.save()

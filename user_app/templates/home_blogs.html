@@ -1,4 +1,5 @@
 {% load new_tags %}
+{% load user_app_tags %}
 
 <!-- ============= Blogs Section ============= -->
     <section class="ftco-section bg-light">
@@ -10,6 +11,7 @@
           </div>
         </div>
 				<div class="row">
+          {% get_blogs as blogs %}
                     {% for blog in blogs %}
           <div class="col-md-4 ftco-animate">
             <div class="blog-entry">

@@ -31,6 +31,7 @@ class DepartmentView(ListView):
     context_object_name = 'doctors'
 
     def get_queryset(self):
+        id = self.kwargs.get('id')
         return Doctor.objects.filter(department=id, is_manager=False, is_visible=True).order_by('post')
     
     def get_context_data(self, **kwargs):

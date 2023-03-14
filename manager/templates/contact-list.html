@@ -29,9 +29,9 @@
                             </a>
                         </div>
                         <div class="col-md-3">{{ item.name }}</div>
+                        <div class="col-md-3">{{ item.phone }}</div>
                         <div class="col-md-3">{{ item.email }}</div>
                         <div class="col-md-3">{{ item.subject }}</div>
-                        <div class="col-md-3"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-3"></div>
@@ -41,6 +41,7 @@
                 {% endfor %}
             </div>
         </div>
+        {% if contacts.has_next or contacts.has_previous %}
         <div class="row no-gutters my-5">
           <div class="col text-center">
             <div class="block-27">
@@ -62,5 +63,6 @@
             </div>
           </div>
         </div>
+        {% endif %}
     </section>
 {% endblock %}

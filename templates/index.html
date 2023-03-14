@@ -78,8 +78,10 @@
                       <a href="{% url 'user_app:ambulant_view' id=5 %}">АКУШЕР-ГІНЕКОЛОГ</a>
                   </div>
                 </div>
-	        	<li class="nav-item"><a href="" class="nav-link">ПОСЛУГИ</a></li>
-	        	<li class="nav-item"><a href="" class="nav-link">ВАКАНСІЇ</a></li>
+                {% comment %}
+                <li class="nav-item"><a href="" class="nav-link">ПОСЛУГИ</a></li>
+                <li class="nav-item"><a href="" class="nav-link">ВАКАНСІЇ</a></li>
+                {% endcomment %}
                 <div class="dropdown">
                   <button class="dropbtn">ДОКУМЕНТИ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
@@ -90,8 +92,10 @@
                     <button class="dropbtn">НОВИНИ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
                       <a href="{% url 'user_app:blogs_view' %}">НОВИНИ</a>
+                      {% comment %}
                       <a href="">ПУБЛІЧНІ ЗАКУПІВЛІ</a>
                       <a href="">АНТИКОРУПЦІЙНА ПРОГРАМА</a>
+                      {% endcomment %}
                   </div>
                 </div>
 	          <li class="nav-item"><a href="{% url 'user_app:contact_view' %}" class="nav-link">КОНТАКТИ</a></li>
@@ -138,13 +142,17 @@
               <ul class="list-unstyled">
                 <li><a href="{% url 'user_app:home_view' %}">Головна</a></li>
                 <li><a href="{% url 'user_app:admin_view' %}">Адміністрація</a></li>
+                {% comment %}
                 <li><a href="#">Послуги</a></li>
                 <li><a href="#">Вакансії</a></li>
                 <li><a href="#">Документи</a></li>
+                {% endcomment %}
                   <li><a href="{% url 'user_app:document_view' %}">Статут</a></li>
                 <li><a href="{% url 'user_app:blogs_view' %}">Новини</a></li>
+                {% comment %}
                   <li><a href="#">Публічні закупівлі</a></li>
                   <li><a href="#">Антикорупційна програма</a></li>
+                {% endcomment %}
                 <li><a href="{% url 'user_app:contact_view' %}">Контакти</a></li>
               </ul>
             </div>

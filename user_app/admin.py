@@ -6,7 +6,7 @@ from .models import Department, Doctor, Administration, Blog, BlogImage, Contact
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ['name', 'manager', 'image']
     list_filter = ['number', ]
-    list_editable = ['name', 'manager', 'image']
+    list_editable = ['manager', 'image']
     list_display_links = ['name', ]
 
 

@@ -57,7 +57,7 @@ class BlogDetailView(DetailView):
     context_object_name = 'blog'
     model = Blog
     
-    def get_queryset(self):
+    def get_object(self):
         return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'))
 
     def get_context_data(self, **kwargs):

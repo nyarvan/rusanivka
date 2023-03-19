@@ -57,6 +57,9 @@ class BlogDetailView(DetailView):
     context_object_name = 'blog'
     model = Blog
 
+    def get_object(self, queryset):
+        return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['images'] = BlogImage.objects.filter(blog=self.get_object())

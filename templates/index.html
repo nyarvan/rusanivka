@@ -74,7 +74,6 @@
                     <a href="{% url 'user_app:ambulant_view' id=1 %}">АМБУЛАТОРІЯ №1</a>
                     <a href="{% url 'user_app:ambulant_view' id=2 %}">АМБУЛАТОРІЯ №2</a>
                     <a href="{% url 'user_app:ambulant_view' id=3 %}">АМБУЛАТОРІЯ №3</a>
-                      <a href="{% url 'user_app:ambulant_view' id=4 %}">СТОМАТОЛОГІЯ</a>
                       <a href="{% url 'user_app:ambulant_view' id=5 %}">АКУШЕР-ГІНЕКОЛОГ</a>
                   </div>
                 </div>
@@ -162,7 +161,6 @@
                 <li><a href="{% url 'user_app:ambulant_view' id=1 %}">Амбулаторія №1</a></li>
                 <li><a href="{% url 'user_app:ambulant_view' id=2 %}">Амбулаторія №2</a></li>
                 <li><a href="{% url 'user_app:ambulant_view' id=3 %}">Амбулаторія №3</a></li>
-                <li><a href="{% url 'user_app:ambulant_view' id=4 %}">Стоматологія</a></li>
                 <li><a href="{% url 'user_app:ambulant_view' id=5 %}">Акушер-гінеколог</a></li>
               </ul>
             </div>
@@ -175,9 +173,9 @@
               <div class="block-21 mb-4 d-flex">
                 <a href="{% url 'user_app:blog_single_view' slug=blog.slug %}" class="blog-img mr-4" style="background-image: url({{ blog.image.url }});"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}">{{ blog.title }}</a></h3>
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}">{{ blog.title }}</a></h3>
                   <div class="meta">
-                      <div><a href="{% url 'user_app:blog_single_view' slug=blog.slug %}"> {{ blog.create|date:'d.m.Y' }}</a></div>
+                      <div><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}"> {{ blog.create|date:'d.m.Y' }}</a></div>
                   </div>
                 </div>
               </div>

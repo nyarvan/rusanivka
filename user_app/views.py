@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .models import Department, Doctor, Administration, Blog, BlogImage
 from .forms import FormContact
 
@@ -76,5 +76,5 @@ class ContactView(FormView):
         return super(ContactView, self).form_valid(form)
 
 
-def document_view(request):
-    pass
+class DocumentView(TemplateView):
+    template_name = 'statut.html'

@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import HomepageView, AdministrationView, DepartmentView, BlogsView, BlogDetailView, ContactView, \
-    document_view
+from .views import HomepageView, AdministrationView, DepartmentView, BlogsView, BlogDetailView, ContactView, DocumentView
 
 app_name = 'user_app'
 
@@ -11,5 +10,5 @@ urlpatterns = [
     path('blog/news/', BlogsView.as_view(), name='blogs_view'),
     path('blog/news/<int:id>/<slug:slug>/', BlogDetailView.as_view(), name='blog_single_view'),
     path('contact/', ContactView.as_view(), name='contact_view'),
-    path('documents/statut/', document_view, name='document_view'),
+    path('documents/statut/', DocumentView.as_view(), name='document_view'),
 ]

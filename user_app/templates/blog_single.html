@@ -56,7 +56,7 @@
                   </a>
                     {% if 'manager' in user.groups.all.0.name %}
                     <div class="section-title text-center">
-                        <p><a href="{% url 'add_blog_image' slug=item.slug %}">Додати фото: <img src="{% static 'images/plus2.png' %}"></a></p>
+                        <p><a href="{% url 'add_blog_image' slug=blog.slug %}">Додати фото: <img src="{% static 'images/plus2.png' %}"></a></p>
                     </div>
                 {% endif %}
                 </div>
@@ -66,10 +66,10 @@
               {% endfor %}
                {% if 'manager' in user.groups.all.0.name %}
                     <div class="section-title text-center">
-                        <p><a href="{% url 'update_blog' pk=item.pk%}">Редагувати: <img src="{% static 'images/edit.png' %}"></a></p>
+                        <p><a href="{% url 'update_blog' pk=blog.pk%}">Редагувати: <img src="{% static 'images/edit.png' %}"></a></p>
                     </div>
                    <div class="section-title text-center">
-                        <p><a href="{% url 'delete_blog' pk=item.pk%}">Видалити: <img src="{% static 'images/remove.png' %}"></a></p>
+                        <p><a href="{% url 'delete_blog' pk=blog.pk%}">Видалити: <img src="{% static 'images/remove.png' %}"></a></p>
                    </div>
                 {% endif %}
           </div> <!-- .col-md-8 -->

@@ -46,9 +46,9 @@
               {% get_blogs as news %}
                 {% for item in news %}
               <div class="block-21 mb-4 d-flex">
-                <a href="{% url 'user_app:blog_single_view' slug=item.slug %}" class="blog-img mr-4" style="background-image: url({{ item.image.url }});"></a>
+                <a href="{% url 'user_app:blog_single_view' id=item.id slug=item.slug %}" class="blog-img mr-4" style="background-image: url({{ item.image.url }});"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug=item.slug %}">{{ item.title }}</a></h3>
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=item.id slug=item.slug %}">{{ item.title }}</a></h3>
                   <div class="meta">
                     <div><span class="icon-calendar"></span> {{ item.create|date:'d.m.Y' }}</div>
                   </div>

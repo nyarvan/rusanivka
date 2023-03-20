@@ -70,9 +70,9 @@
 	        	<li class="nav-item"><a href="{% url 'user_app:admin_view' %}" class="nav-link">АДМІНІСТРАЦІЯ</a></li>
                 <div class="dropdown">
                   <button class="dropbtn">АМБУЛАТОРІЇ <img src="{% static 'images/down.png' %}"></button>
-                  {% get_departments_for_menu as departments %}
+                  {% get_departments_for_menu as departments_menu %}
                   <div class="dropdown-content">
-                    {% for item in departments %}
+                    {% for item in departments_menu %}
                     <a href="{% url 'user_app:ambulant_view' id=item.id %}">{{ item.name }}</a>
                     {% endfor %}
                   </div>

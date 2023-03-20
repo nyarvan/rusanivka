@@ -23,7 +23,7 @@
               <div class="text bg-white p-4">
                 <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}">{{ blog.title }}</a></h3>
                   {% if blog.text %}
-                <p>{{ blog.text|slice:'200'|replace:'\n' }}....</p>
+                <p>{{ blog.text|slice:'200'|replace:'\n' }}{% if blog.text|length > 200 %}....{% endif %}</p>
                   {% endif %}
                 <div class="d-flex align-items-center mt-4">
 	                <p class="mb-0"><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}" class="btn btn-primary">Детальніше</a></p>

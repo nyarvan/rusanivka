@@ -50,7 +50,7 @@
                 <div class="text">
                   <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=item.id slug=item.slug %}">{{ item.title }}</a></h3>
                   <div class="meta">
-                    <div><span class="icon-calendar"></span> {{ item.create|date:'d.m.Y' }}</div>
+                    <div>{{ item.create|date:'d.m.Y' }}</div>
                   </div>
                 </div>
               </div>

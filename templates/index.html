@@ -70,11 +70,11 @@
 	        	<li class="nav-item"><a href="{% url 'user_app:admin_view' %}" class="nav-link">АДМІНІСТРАЦІЯ</a></li>
                 <div class="dropdown">
                   <button class="dropbtn">АМБУЛАТОРІЇ <img src="{% static 'images/down.png' %}"></button>
+                  {% get_departments_for_menu as departments %}
                   <div class="dropdown-content">
-                    <a href="{% url 'user_app:ambulant_view' id=1 %}">АМБУЛАТОРІЯ №1</a>
-                    <a href="{% url 'user_app:ambulant_view' id=2 %}">АМБУЛАТОРІЯ №2</a>
-                    <a href="{% url 'user_app:ambulant_view' id=3 %}">АМБУЛАТОРІЯ №3</a>
-                      <a href="{% url 'user_app:ambulant_view' id=5 %}">АКУШЕР-ГІНЕКОЛОГ</a>
+                    {% for item in departments %}
+                    <a href="{% url 'user_app:ambulant_view' id=item.id %}">{{ item.name }}</a>
+                    {% endfor %}
                   </div>
                 </div>
                 {% comment %}

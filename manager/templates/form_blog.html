@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    Менеджер | {% if not blog %} Створення блогу {% else %} {{ blog.title }} {% endif %}
+{% endblock %}
+
+{% block content%}
+    <section class="ftco-section contact-section">
+			<div class="container">
+				<div class="row d-flex justify-content-center">
+					<div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+            <div class="section-title text-center">
+                <h3>Меню {% if not blog %} Створення блогу {% else %} {{ blog.title }} {% endif %}</h3>
+            </div>
+            <form method="post" role="form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group">
+                  <p><b>Заголовок: </b> {{ form.title }}</p>
+              </div>
+              <div class="form-group">
+                  <p><b>Фотографія:</b> {{ form.image }}</p>
+              </div>
+              <div class="form-group">
+                <p><b>Текст: </b> {{ form.text }}</p>
+              </div>
+              {% with named_formsets.images as formset %}  
+                  {{ formset.management_form }}
+                <script type="text/html" id="images-template">
+                    <div id="images-__prefix__" class="form-group hide_all">
+                        {% with formset.empty_form.visible_fields as field %}
+                        <p><b>Фотографія:</b> {{ field.0 }}</p>
+                        {% endwith %}
+                    </div>
+                </script>
+              <div id="item-images">
+                {% for forms in formset %}
+                {{ forms.management_form }}
+                <div id="images-{{ forloop.counter0 }}" class="form-group">
+                  {{ forms.id }}
+                  {% if forms.instance.pk %}
+                  <div class="text-center mb-3">
+                    <img src="{{ forms.instance.image.url }}" class="rounded" width="50%">
+                  </div>
+                  {% endif %}
+                  <div class="row">
+                    <div class="col">
+                      <p><b>Фотографія:</b> {{ forms.image }}</p>
+                    </div>
+                    {% if forms.instance.pk %}
+                      <div class="col-2">
+                          <a href="{% url 'delete_blog_image' forms.instance.pk %}" class="delete_link">Видалити</a>
+                      </div>
+                  {% endif %}
+                  </div>
+                  <hr>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="row align-items-end mb-3">
+                <div class="col">
+                </div>
+                <div class="col-5">
+                    <a href="#" id="add-images-button" class="btn btn-primary add-images">
+                        Додати зображення
+                    </a>
+                </div>
+              </div>
+              <div class="form-group">
+                {% if not blog %}
+                  <input type="submit" value="Створити" class="btn btn-primary py-3 px-5">
+                {% else %}
+                  <input type="submit" value="Оновити" class="btn btn-primary py-3 px-5">
+                {% endif %}
+              </div>
+              {% endwith %}
+            </form>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.3.slim.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock%}

@@ -16,6 +16,7 @@ class DoctorAdmin(admin.ModelAdmin):
     list_filter = ['department', 'post', 'is_manager', 'is_visible']
     list_editable = ['image', 'post', 'is_manager', 'is_visible']
     list_display_links = ['name', ]
+    search_fields = ['name', ]
 
 
 @admin.register(Administration)
@@ -23,22 +24,22 @@ class AdministrationAdmin(admin.ModelAdmin):
     list_display = ['name', 'image', 'post']
     list_filter = ['position', ]
     list_editable = ['image', 'post']
+    list_display_links = ['name', ]
+
+
+class BlogImageAdmin(admin.TabularInline):
+    model = BlogImage
+    raw_id_fields = ['blog', ]
 
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ['title', 'image', 'create']
-    list_filter = ['create', ]
+    list_display = ['title', 'slug', 'image', 'create']
     list_editable = ['image', ]
     list_display_links = ['title', ]
     prepopulated_fields = {'slug': ('title',)}
-
-
-@admin.register(BlogImage)
-class BlogImageAdmin(admin.ModelAdmin):
-    list_display = ['blog', 'image']
-    list_filter = ['blog', ]
-    list_editable = ['image', ]
+    search_fields = ['title', 'text']
+    inlines = [BlogImageAdmin, ]
 
 
 @admin.register(Document)
@@ -53,3 +54,4 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'subject', 'date', 'is_processing']
     list_filter = ['date', 'is_processing']
     list_editable = ['is_processing', ]
+    search_fields = ['name', 'email']

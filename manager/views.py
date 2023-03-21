@@ -1,29 +1,25 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import FormAdministration, FormDoctor, FormDepartment, FormBlog, FormBlogImage
+from django.contrib import messages
+from .forms import FormAdministration, FormDoctor, FormDepartment, FormBlog, BlogImageFormSet
 from user_app.models import Contact, Blog, BlogImage, Administration, Doctor, Department
+from .mixins import ManagerUserMixin
 
 
 def is_manager(user):
     return user.groups.filter(name='manager').exists()
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def contact_list_view(request):
-    contacts = Contact.objects.filter(is_processing=False).order_by('-date')
-    blogs = Blog.objects.order_by('-create')[:3]
+class ContactListView(ManagerUserMixin, ListView):
+    template_name = 'contact-list.html'
+    context_object_name = 'contacts'
+    paginate_by = 5
 
-    paginator = Paginator(contacts, 5)
-    page = request.GET.get('page')
-
-    contacts = paginator.get_page(page)
-
-    return render(request, 'contact-list.html', context={
-        'blogs': blogs,
-        'contacts': contacts,
-    })
+    def get_queryset(self):
+        return Contact.objects.filter(is_processing=False).order_by('-date')
 
 
 @login_required(login_url='/login/')
@@ -33,164 +29,159 @@ def update_contact(request, pk):
     return redirect('contact_list_view')
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def add_administration(request):
-    form_administration = FormAdministration(request.POST, request.FILES or None)
-
-    if form_administration.is_valid():
-        form_administration.save()
-        return redirect('user_app:admin_view')
-
-    return render(request, 'add_admin.html', context={
-        'form': form_administration,
-    })
+class CreateAdministrationView(ManagerUserMixin, CreateView):
+    template_name = 'form_admin.html'
+    form_class = FormAdministration
+    success_url = '/administration/'
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def add_doctor(request, id):
-    form_doctor = FormDoctor(request.POST, request.FILES or None)
-    department = Department.objects.get(id=id)
-    if form_doctor.is_valid():
-        form_doctor.save()
-        return redirect('user_app:ambulant_view', id=id)
+class CreateDoctorView(ManagerUserMixin, CreateView):
+    template_name = 'form_doctor.html'
+    form_class = FormDoctor
 
-    return render(request, 'add_doctor.html', context={
-        'form': form_doctor,
-        'department': department,
-    })
-
-
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def add_department(request):
-    form_depart = FormDepartment(request.POST, request.FILES or None)
-
-    if form_depart.is_valid():
-        form_depart.save()
-        return redirect('user_app:home_view')
-
-    return render(request, 'add_depart.html', context={
-        'form': form_depart,
-    })
+    def get_success_url(self):
+        context = self.get_context_data()
+        id = context['department'].id
+        return f'/ambulant{id}/'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['department'] = get_object_or_404(Department, id=self.kwargs.get('id'))
+        return context
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def add_blog(request):
-    form_blog = FormBlog(request.POST, request.FILES or None)
+class CreateDepartmentView(ManagerUserMixin, CreateView):
+    template_name = 'form_department.html'
+    form_class = FormDepartment
+    success_url = '/'
 
-    if form_blog.is_valid():
-        form_blog.save()
+
+class BlogInline():
+    form_class = FormBlog
+    model = Blog
+    template_name = "form_blog.html"
+    success_url = '/blog/news/'
+
+    def form_valid(self, form):
+        named_formsets = self.get_named_formsets()
+        if not all((x.is_valid() for x in named_formsets.values())):
+            return self.render_to_response(self.get_context_data(form=form))
+        
+        self.object = form.save()
+
+        for name, formset in named_formsets.items():
+            formset_save_func = getattr(self, 'formset_{0}_valid'.format(name), None)
+            if formset_save_func is not None:
+                formset_save_func(formset)
+            else:
+                formset.save()
         return redirect('user_app:blogs_view')
 
-    return render(request, 'add_blog.html', context={
-        'form': form_blog,
-    })
+    def formset_image_valid(self, formset):
+        images = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for image in images:
+            image.blog = self.object
+            image.save()
 
 
-@login_required(login_url='/login/')
+class CreateBlogView(ManagerUserMixin, BlogInline, CreateView):
+
+    def get_context_data(self, **kwargs):
+        ctx = super(CreateBlogView, self).get_context_data(**kwargs)
+        ctx['named_formsets'] = self.get_named_formsets()
+        return ctx
+
+    def get_named_formsets(self):
+        if self.request.method == "GET":
+            return {
+                'images': BlogImageFormSet(prefix='blog_images'),
+            }
+        else:
+            return {
+                'images': BlogImageFormSet(self.request.POST or None, self.request.FILES or None, prefix='blog_images'),
+            }
+        
+
+class UpdateBlogView(ManagerUserMixin, BlogInline, UpdateView):
+
+    def get_context_data(self, **kwargs):
+        ctx = super(UpdateBlogView, self).get_context_data(**kwargs)
+        ctx['named_formsets'] = self.get_named_formsets()
+        ctx['blog'] = self.object
+        return ctx
+
+    def get_named_formsets(self):
+        return {
+            'images': BlogImageFormSet(self.request.POST or None, self.request.FILES or None, instance=self.object, prefix='blog_images'),
+        }
+
+
+@login_required(login_url="/login/")
 @user_passes_test(is_manager)
-def add_blog_image(request, slug):
-    blog = Blog.objects.get(slug=slug)
+def delete_blog_image(request, pk):
+    try:
+        image = BlogImage.objects.get(id=pk)
+    except BlogImage.DoesNotExist:
+        messages.success(
+            request, 'Зображення не знайдено'
+            )
+        return redirect('manager:update_blog', pk=image.blog.id)
 
-    form_blog_image = FormBlogImage(request.POST, request.FILES or None)
-
-    if form_blog_image.is_valid():
-        form_blog_image.save()
-        return redirect('user_app:blog_single_view', slug=blog.slug)
-
-    return render(request, 'add_blog_image.html', context={
-        'blog': blog,
-        'form': form_blog_image,
-    })
-
-
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def update_administration(request, pk):
-    admin = Administration.objects.get(pk=pk)
-    if request.method == 'POST':
-        form_admin = FormAdministration(request.POST, request.FILES, instance=admin)
-        if form_admin.is_valid():
-            form_admin.save()
-            return redirect('user_app:admin_view')
-
-    form_admin = FormAdministration(instance=admin)
-    return render(request, 'update_admin.html', context={
-        'form': form_admin,
-        'admin': admin,
-    })
+    image.delete()
+    messages.success(
+            request, 'Зображення видалено вдачно'
+            )
+    return redirect('manager:update_blog', pk=image.blog.id)
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def update_doctor(request, pk):
-    doctor = Doctor.objects.get(pk=pk)
-    if request.method == "POST":
-        form_doctor = FormDoctor(request.POST, request.FILES, instance=doctor)
-        if form_doctor.is_valid():
-            form_doctor.save()
-            return redirect('user_app:ambulant_view', id=doctor.department.id)
+class UpdateAdministrationView(ManagerUserMixin, UpdateView):
+    template_name = 'form_admin.html'
+    form_class = FormAdministration
+    success_url = '/administration/'
 
-    form_doctor = FormDoctor(instance=doctor)
-    return render(request, 'update_doctor.html', context={
-        'doctor': doctor,
-        'form': form_doctor,
-    })
+    def get_queryset(self):
+        return Administration.objects.filter(id=self.kwargs.get('pk'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['admin'] = self.get_queryset().first()
+        return context
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def update_department(request, pk):
-    department = Department.objects.get(pk=pk)
-    if request.method == 'POST':
-        form_depart = FormDepartment(request.POST, request.FILES, instance=department)
-        if form_depart.is_valid():
-            form_depart.save()
-            return redirect('user_app:home_view')
+class UpdateDoctorView(ManagerUserMixin, UpdateView):
+    template_name = 'form_doctor.html'
+    form_class = FormDoctor
+    
+    def get_queryset(self):
+        return Doctor.objects.select_related('department').filter(id=self.kwargs.get('pk'))
 
-    form_depart = FormDepartment(instance=department)
-    return render(request, 'update_department.html', context={
-        'department': department,
-        'form': form_depart,
-    })
-
-
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def update_blog(request, pk):
-    blog = Blog.objects.get(pk=pk)
-    if request.method == 'POST':
-        form_blog = FormBlog(request.POST, request.FILES, instance=blog)
-        if form_blog.is_valid():
-            form_blog.save()
-            return redirect('user_app:blog_single_view', slug=blog.slug)
-
-    form_blog = FormBlog(instance=blog)
-    return render(request, 'update_blog.html', context={
-        'blog': blog,
-        'form': form_blog,
-    })
+    def get_success_url(self):
+        context = self.get_context_data()
+        id = context['department'].id
+        return f'/ambulant{id}/'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        doctor = self.get_queryset().first()
+        context['doctor'] = doctor
+        context['department'] = doctor.department
+        return context
 
 
-@login_required(login_url='/login/')
-@user_passes_test(is_manager)
-def update_blog_image(request, slug, id):
-    blog = Blog.objects.get(slug=slug)
-    blog_image = BlogImage.objects.get(blog=blog, id=id)
-    if request.method == 'POST':
-        form_blog_image = FormBlogImage(request.POST, request.FILES, instance=blog_image)
-        if form_blog_image.is_valid():
-            form_blog_image.save()
-            return redirect('user_app:blog_single_view', slug=blog_image.blog.slug)
+class UpdateDepartmentView(ManagerUserMixin, UpdateView):
+    template_name = 'form_department.html'
+    form_class = FormDepartment
+    success_url = '/'
 
-    form_blog_image = FormBlogImage(instance=blog_image)
-    return render(request, 'update_blog_image.html', context={
-        'blog_image': blog_image,
-        'form': form_blog_image,
-    })
+    def get_queryset(self):
+        return Department.objects.filter(id=self.kwargs.get('pk'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['department'] = self.get_queryset().first()
+        return context
 
 
 @login_required(login_url="/login/")
@@ -220,11 +211,3 @@ def delete_depart(request, pk):
 def delete_blog(request, pk):
     Blog.objects.get(pk=pk).delete()
     return redirect('user_app:blogs_view')
-
-@login_required(login_url="/login/")
-@user_passes_test(is_manager)
-def delete_blog_image(request, id, slug):
-    BlogImage.objects.get(id=id).delete()
-    blog = Blog.objects.get(slug=slug)
-
-    return redirect('user_app:blog_single_view', slug=blog.slug)

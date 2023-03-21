@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import inlineformset_factory
 from user_app.models import Administration, Doctor, Department, Blog, BlogImage
 
 
@@ -12,7 +13,7 @@ class FormAdministration(forms.ModelForm):
         'type': "number", 'class': "form-control", 'placeholder': "Введіть позицію",
     }))
 
-    image = forms.FileField(required=False)
+    image = forms.FileField()
 
     post = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть посаду",
@@ -74,7 +75,7 @@ class FormDepartment(forms.ModelForm):
         'type': "text", 'class': "form-control", 'placeholder': "Введіть ПІБ завідувача",
     }))
 
-    image = forms.FileField(required=False)
+    image = forms.FileField()
 
     phone = forms.CharField(widget=forms.TextInput(attrs={
         'type': "text", 'class': "form-control", 'placeholder': "Введіть номер телефону",
@@ -95,9 +96,9 @@ class FormBlog(forms.ModelForm):
         'type': "text", 'class': "form-control", 'placeholder': "Введіть заголовок",
     }))
 
-    image = forms.FileField(required=False)
+    image = forms.FileField()
 
-    text = forms.CharField(required=False, widget=forms.Textarea(attrs={
+    text = forms.CharField(widget=forms.Textarea(attrs={
         'type': "text", 'class': "form-control", 'rows': "25", 'placeholder': "Введіть текст новини",
     }))
 
@@ -108,12 +109,14 @@ class FormBlog(forms.ModelForm):
 
 class FormBlogImage(forms.ModelForm):
 
-    blog = forms.ModelChoiceField(queryset=Blog.objects.all(), widget=forms.Select(attrs={
-        'class': 'form-control'
-    }))
-
-    image = forms.FileField(required=False)
+    image = forms.FileField()
 
     class Meta:
         model = BlogImage
-        fields = ('blog', 'image')
+        fields = ('image', )
+
+
+BlogImageFormSet = inlineformset_factory(
+    Blog, BlogImage, form=FormBlogImage,
+    extra=1, can_delete=True, can_delete_extra=True
+)

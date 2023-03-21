@@ -45,23 +45,23 @@
                 {% endfor %}
             </div>
         </div>
-        {% if contacts.has_next or contacts.has_previous %}
+        {% if page_obj.has_next or page_obj.has_previous %}
         <div class="row no-gutters my-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                  {% if contacts.has_previous%}
-                <li><a href="?page={{ contacts.previous_page_number }}"><i class="ion-ios-arrow-back"></i></a></li>
+                  {% if page_obj.has_previous%}
+                <li><a href="?page={{ page_obj.previous_page_number }}"><i class="ion-ios-arrow-back"></i></a></li>
                   {% endif %}
-              {% for page in contacts.paginator.page_range %}
-                  {% if page == contacts.number %}
+              {% for page in page_obj.paginator.page_range %}
+                  {% if page == page_obj.number %}
                 <li class="active"><span>{{ page }}</span></li>
                   {% else %}
                 <li><a href="?page={{ page }}">{{ page }}</a></li>
                   {% endif %}
               {% endfor %}
               {% if contacts.has_next %}
-                <li><a href="?page={{ contacts.next_page_number }}"><i class="ion-ios-arrow-forward"></i></a></li>
+                <li><a href="?page={{ page_obj.next_page_number }}"><i class="ion-ios-arrow-forward"></i></a></li>
               {% endif %}
               </ul>
             </div>

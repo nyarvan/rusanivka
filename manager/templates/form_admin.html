@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block title %}
-    Менеджер | Адміністрація
+    Менеджер | Адміністрація | {% if not admin %} Створення {% else %} Оновлення {% endif %} адміністрації
 {% endblock %}
 
 {% block content%}
@@ -36,11 +36,13 @@
                 <input type="submit" value="Оновити" class="btn btn-primary py-3 px-5">
               </div>
             </form>
+            {% if admin %}
             <div class="section-title text-center">
                 <a href="{% url "delete_admin" pk=admin.pk %}">
                     <button type="button" class="btn btn-primary btn-sm">Видалити</button>
                 </a>
             </div>
+            {% endif %}
 					</div>
 				</div>
 			</div>

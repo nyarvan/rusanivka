@@ -48,7 +48,7 @@
             <div class="block-27">
               <ul>
                   {% if page_obj.has_previous%}
-                <li><a href="?page={{ news.previous_page_number }}"><img src="{% static 'images/prev.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
+                <li><a href="?page={{ page_obj.previous_page_number }}"><img src="{% static 'images/prev.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
                   {% endif %}
               {% for page in page_obj.paginator.page_range %}
                   {% if page == page_obj.number %}

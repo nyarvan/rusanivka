@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block title %}
-    Менеджер | Створення амбулаторії
+    Менеджер | {{ doctor.department }} | {% if not doctor %} Створення {% else %} Оновлення {% endif %} лікаря
 {% endblock %}
 
 {% block content%}
@@ -10,35 +10,42 @@
 				<div class="row d-flex justify-content-center">
 					<div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
                                         <div class="section-title text-center">
-                    <h3>Меню створення амбулаторії</h3>
+                    <h3>Меню {{ doctor.name }}</h3>
                 </div>
              <form method="post" role="form" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                  <p><b>Скороченна назва закладу: </b> {{ form.name }}</p>
+                  <p><b>Оберіть амбулаторію: </b> {{ form.department }}</p>
               </div>
               <div class="form-group">
-                  <p><b>Повна назва закладу: </b> {{ form.full_name }}</p>
+                  {{ form.name }}
               </div>
               <div class="form-group">
-                <p><b>ПІБ завідувача: </b> {{ form.manager }}</p>
+                {{ form.post }}
               </div>
               <div class="form-group">
                   <p><b>Фотографія:</b> {{ form.image }}</p>
               </div>
               <div class="form-group">
-                <p><b>Адреса: </b> {{ form.address }}</p>
+                {{ form.room }}
               </div>
               <div class="form-group">
-                <p><b>Номер телефону: </b> {{ form.phone }}</p>
+                {{ form.schedule }}
               </div>
               <div class="form-group">
-                  <p><b>Номер закладу: </b> {{ form.number }}</p>
+                  <p><b>Видимость: </b> {{ form.is_visible }}</p>
               </div>
               <div class="form-group">
-                <input type="submit" value="Додати" class="btn btn-primary py-3 px-5">
+                <input type="submit" value="Оновити" class="btn btn-primary py-3 px-5">
               </div>
             </form>
+            {% if doctor %}
+            <div class="section-title text-center">
+                <a href="{% url 'delete_doctor' pk=doctor.pk %}">
+                    <button type="button" class="btn btn-primary btn-sm">Видалити</button>
+                </a>
+            </div>
+            {% endif %}
 					</div>
 				</div>
 			</div>

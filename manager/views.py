@@ -127,13 +127,13 @@ def delete_blog_image(request, pk):
         messages.success(
             request, 'Зображення не знайдено'
             )
-        return redirect('manager:update_blog', pk=image.blog.id)
+        return redirect('update_blog', pk=image.blog.id)
 
     image.delete()
     messages.success(
             request, 'Зображення видалено вдачно'
             )
-    return redirect('manager:update_blog', pk=image.blog.id)
+    return redirect('update_blog', pk=image.blog.id)
 
 
 class UpdateAdministrationView(ManagerUserMixin, UpdateView):

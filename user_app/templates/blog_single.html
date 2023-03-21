@@ -35,13 +35,7 @@
                     </div>
                               {% for image in images %}
                                   <div class="carousel-item">
-                                  {% if 'manager' in user.groups.all.0.name %}
-                                      <a href="{% url 'update_blog_image' slug=item.slug id=image.id%}">
-                                          <img class="d-block w-100" src="{{ image.image.url }}" alt="">
-                                      </a>
-                                  {% else %}
                                       <img class="d-block w-100" src="{{ image.image.url }}" alt="">
-                                  {% endif %}
                                   </div>
                               {% endfor %}
 
@@ -54,11 +48,6 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                   </a>
-                    {% if 'manager' in user.groups.all.0.name %}
-                    <div class="section-title text-center">
-                        <p><a href="{% url 'add_blog_image' slug=blog.slug %}">Додати фото: <img src="{% static 'images/plus2.png' %}"></a></p>
-                    </div>
-                {% endif %}
                 </div>
             </p>
               {% for text in blog.text|split:'\n' %}

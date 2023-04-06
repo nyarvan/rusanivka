@@ -21,29 +21,31 @@
     <section class="ftco-section">
 			<div class="container">
 				<div class="row">
-                <div class="col-md-6 col-lg-3 ftco-animate">
+                    {% for doctor in doctors %}
+                    {% if doctor.is_manager %}
+                    <div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="staff">
 							<div class="img-wrap d-flex align-items-stretch">
-								<div class="img align-self-stretch" style="background-image: url({{ manager.image.url }});"></div>
+								<div class="img align-self-stretch" style="background-image: url({{ doctor.image.url }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
                                 {% if 'manager' in user.groups.all.0.name %}
-                                    <a href="{% url 'update_doctor' pk=manager.pk %}">
-                                        <h3>{{ manager.name }}</h3>
+                                    <a href="{% url 'update_doctor' pk=doctor.pk %}">
+                                        <h3>{{ doctor.name }}</h3>
                                     </a>
                                 {% else %}
-                                    <h3>{{ manager.name }}</h3>
+                                    <h3>{{ doctor.name }}</h3>
                                 {% endif %}
-                                <span class="position mb-2">Завідувач {{ manager.department }}</span>
-								<span class="position mb-2">{{ manager.post }}</span>
+                                <span class="position mb-2">Завідувач {{ doctor.department }}</span>
+								<span class="position mb-2">{{ doctor.post }}</span>
 								<div class="faded">
-                                    <p><b>{{ manager.room }}</b></p>
-									<p>{{ manager.schedule }}</p>
+                                    <p><b>{{ doctor.room }}</b></p>
+									<p>{{ doctor.schedule }}</p>
 	                            </div>
 							</div>
 						</div>
 					</div>
-                    {% for doctor in doctors %}
+                    {% else %}
                     <div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="staff">
 							<div class="img-wrap d-flex align-items-stretch">
@@ -63,6 +65,7 @@
 							</div>
 						</div>
 					</div>
+                    {% endif %}
                     {% endfor %}
 				</div>
             {% if 'manager' in user.groups.all.0.name %}

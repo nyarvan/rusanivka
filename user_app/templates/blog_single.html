@@ -26,7 +26,7 @@
           <div class="col-lg-8 ftco-animate">
             <h2 class="mb-3">#{{ blog.id }} {{ blog.title }}</h2>
             <p>
-              <img class="d-block w-100" src="{{ item.image.url }}">
+              <img class="d-block w-100" src="{{ blog.image.url }}">
                 {% for image in images %}
                   <img class="d-block w-100" src="{{ image.image.url }}">
                 {% endfor %}

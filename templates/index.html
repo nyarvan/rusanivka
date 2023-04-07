@@ -159,7 +159,7 @@
               <h2 class="ftco-heading-2">Амбулаторії</h2>
               <ul class="list-unstyled">
                 {% for item in departments_menu %}
-                <li><a href="{% url 'user_app:ambulant_view' id=item.id %}">item.name</a></li>
+                <li><a href="{% url 'user_app:ambulant_view' id=item.id %}">{{ item.name }}</a></li>
                 {% endfor %}
               </ul>
             </div>

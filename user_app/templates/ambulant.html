@@ -11,8 +11,8 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
-            <h1 class="mb-2 bread">{{ manager.department }}</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна /</a></span><span>{{ manager.department }}</span></p>
+            <h1 class="mb-2 bread">{{ department.name }}</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна /</a></span><span>{{ department.name }}</span></p>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
                                 <span class="position mb-2">Завідувач {{ doctor.department }}</span>
 								<span class="position mb-2">{{ doctor.post }}</span>
 								<div class="faded">
-                                    <p><b>{{ doctor.room }}</b></p>
+                                    <p><b>Каб. №{{ doctor.room }}</b></p>
 									<p>{{ doctor.schedule }}</p>
 	                            </div>
 							</div>
@@ -59,7 +59,7 @@
                                 {% endif %}
 								<span class="position mb-2">{{ doctor.post }}</span>
 								<div class="faded">
-                                    <p><b>{{ doctor.room }}</b></p>
+                                    <p><b>Каб. №{{ doctor.room }}</b></p>
 									<p>{{ doctor.schedule }}</p>
 	                            </div>
 							</div>
@@ -96,7 +96,7 @@
                                 {% endif %}
 								<span class="position mb-2">{{ doctor.post }}</span>
 								<div class="faded">
-                                    <p><b>{{ doctor.room }}</b></p>
+                                    <p><b>Каб. №{{ doctor.room }}</b></p>
 									<p>{{ doctor.schedule }}</p>
 	                            </div>
 							</div>

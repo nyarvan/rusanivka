@@ -51,7 +51,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ['name', 'phone', 'email', 'subject', 'date', 'is_processing']
+    list_display = ['name', 'email', 'subject', 'date', 'is_processing']
     list_filter = ['date', 'is_processing']
     list_editable = ['is_processing', ]
     search_fields = ['name', 'email']

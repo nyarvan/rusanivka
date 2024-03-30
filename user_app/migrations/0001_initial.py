@@ -12,21 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Department',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(db_index=True, max_length=50, unique=True)),
-                ('full_name', models.CharField(max_length=75, unique=True)),
-                ('number', models.PositiveIntegerField(unique=True)),
-                ('manager', models.CharField(max_length=50)),
-                ('phone', models.CharField(max_length=20)),
-                ('address', models.CharField(max_length=100)),
-            ],
-            options={
-                'ordering': ('number',),
-            },
-        ),
-        migrations.CreateModel(
             name='CategoryBlog',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

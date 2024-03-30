@@ -60,7 +60,6 @@ class BlogInline():
     form_class = FormBlog
     model = Blog
     template_name = "form_blog.html"
-    success_url = '/blog/news/'
 
     def form_valid(self, form):
         named_formsets = self.get_named_formsets()
@@ -75,7 +74,7 @@ class BlogInline():
                 formset_save_func(formset)
             else:
                 formset.save()
-        return redirect('user_app:blogs_view')
+        return redirect('user_app:blogs_view', slug=self.object.category.slug)
 
     def formset_image_valid(self, formset):
         images = formset.save(commit=False)

@@ -74,7 +74,7 @@ class BlogInline():
                 formset_save_func(formset)
             else:
                 formset.save()
-        return redirect('user_app:blogs_view', slug=self.object.category.slug)
+        return redirect('user_app:blog_single_view', slug_category=self.object.category.slug, id=self.object.id, slug=self.object.slug)
 
     def formset_image_valid(self, formset):
         images = formset.save(commit=False)

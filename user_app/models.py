@@ -89,7 +89,7 @@ class Blog(models.Model):
     def get_default_category():
         return CategoryBlog.objects.get(slug='novini')
 
-    # category = models.ForeignKey(CategoryBlog, on_delete=models.CASCADE, default=get_default_category)
+    category = models.ForeignKey(CategoryBlog, on_delete=models.CASCADE, default=get_default_category)
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     image = models.ImageField(upload_to='images/blogs', default='images/doctors/no-image.png')
@@ -97,7 +97,7 @@ class Blog(models.Model):
     create = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('-create', )
+        ordering = ('-create', 'category')
         index_together = (('id', 'slug'), )
 
     def save(self, *args, **kwargs):

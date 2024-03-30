@@ -104,7 +104,7 @@ class FormBlog(forms.ModelForm):
 
     class Meta:
         model = Blog
-        fields = ('title', 'image', 'text')
+        fields = ('category', 'title', 'image', 'text')
 
 
 class FormBlogImage(forms.ModelForm):

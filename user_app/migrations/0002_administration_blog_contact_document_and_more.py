@@ -101,16 +101,5 @@ class Migration(migrations.Migration):
                 'ordering': ('-blog',),
             },
         ),
-        migrations.CreateModel(
-            name='CategoryBlog',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(db_index=True, max_length=100)),
-                ('slug', models.SlugField(max_length=100)),
-            ],
-            options={
-                'ordering': ('id',),
-                'index_together': {('id', 'slug')},
-            },
-        ),
+        
     ]

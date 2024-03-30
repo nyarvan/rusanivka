@@ -14,7 +14,7 @@
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
             <h1 class="mb-2 bread">{{ blog.title }}</h1>
-              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна /</a></span> <span> <a href="{% url 'user_app:blogs_view' %}"> Новини /</a></span> <span>  {{ blog.title }}</span></p>
+              <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'user_app:home_view' %}">Головна /</a></span> <span> <a href="{% url 'user_app:blogs_view' slug=blog.category.slug %}"> {{ blog.category.title }} /</a></span> <span>  {{ blog.title }}</span></p>
           </div>
         </div>
       </div>
@@ -51,9 +51,9 @@
               {% get_blogs as news %}
                 {% for recent_item in news %}
               <div class="block-21 mb-4 d-flex">
-                <a href="{% url 'user_app:blog_single_view' id=recent_item.id slug=recent_item.slug %}" class="blog-img mr-4" style="background-image: url({{ recent_item.image.url }});"></a>
+                <a href="{% url 'user_app:blog_single_view' slug_category=recent_item.category.slug id=recent_item.id slug=recent_item.slug %}" class="blog-img mr-4" style="background-image: url({{ recent_item.image.url }});"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=recent_item.id slug=recent_item.slug %}">{{ recent_item.title }}</a></h3>
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug_category=recent_item.category.slug  id=recent_item.id slug=recent_item.slug %}">{{ recent_item.title }}</a></h3>
                   <div class="meta">
                     <div>{{ recent_item.create|date:'d.m.Y' }}</div>
                   </div>

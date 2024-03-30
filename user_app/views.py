@@ -49,7 +49,8 @@ class BlogsView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Blog.objects.filter(category__slug=self.kwargs.get('slug')).order_by('-create')
+        # return Blog.objects.filter(category__slug=self.kwargs.get('slug')).order_by('-create')
+        return Blog.objects.filter.order_by('-create')
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -63,7 +64,7 @@ class BlogDetailView(DetailView):
     model = Blog
     
     def get_object(self):
-        return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'), category__slug=self.kwargs.get('slug_category'))
+        return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

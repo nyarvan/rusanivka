@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from user_app.models import Administration, Doctor, Department, Blog, BlogImage
+from user_app.models import Administration, Doctor, Department, CategoryBlog, Blog, BlogImage
 
 
 class FormAdministration(forms.ModelForm):
@@ -104,7 +104,7 @@ class FormBlog(forms.ModelForm):
 
     class Meta:
         model = Blog
-        fields = ('title', 'image', 'text')
+        fields = ('category', 'title', 'image', 'text')
 
 
 class FormBlogImage(forms.ModelForm):

@@ -63,7 +63,7 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        Меню
 	      </button>
-	      <p class="button-custom order-lg-last mb-0"><a href="https://helsi.me/" class="btn btn-secondary py-2 px-3" target="_blank">Запис на прийом</a></p>
+	      <p class="button-custom order-lg-last mb-0"><a href="https://patient.medcard24.net/" class="btn btn-secondary py-2 px-3" target="_blank">Запис на прийом</a></p>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav mr-auto">
 	        	<li class="nav-item"><a href="{% url 'user_app:home_view' %}" class="nav-link pl-0">ГОЛОВНА</a></li>
@@ -73,14 +73,10 @@
                   {% get_departments_for_menu as departments_menu %}
                   <div class="dropdown-content">
                     {% for item in departments_menu %}
-                    <a href="{% url 'user_app:ambulant_view' id=item.id %}">{{ item.name }}</a>
+                    <a href="{% url 'user_app:ambulant_view' id=item.id %}">{{ item.name|upper }}</a>
                     {% endfor %}
                   </div>
                 </div>
-                {% comment %}
-                <li class="nav-item"><a href="" class="nav-link">ПОСЛУГИ</a></li>
-                <li class="nav-item"><a href="" class="nav-link">ВАКАНСІЇ</a></li>
-                {% endcomment %}
                 <div class="dropdown">
                   <button class="dropbtn">ДОКУМЕНТИ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
@@ -88,13 +84,12 @@
                   </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropbtn">НОВИНИ <img src="{% static 'images/down.png' %}"></button>
+                    <button class="dropbtn">БЕЗБАР’ЄРНІСТЬ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
-                      <a href="{% url 'user_app:blogs_view' %}">НОВИНИ</a>
-                      {% comment %}
-                      <a href="">ПУБЛІЧНІ ЗАКУПІВЛІ</a>
-                      <a href="">АНТИКОРУПЦІЙНА ПРОГРАМА</a>
-                      {% endcomment %}
+                    {% get_blog_category_for_menu as blog_categories_menu %}
+                    {% for category in blog_categories_menu %}
+                      <a href="{% url 'user_app:blogs_view' slug=category.slug %}">{{ category.title|upper }}</a>
+                    {% endfor %}
                   </div>
                 </div>
 	          <li class="nav-item"><a href="{% url 'user_app:contact_view' %}" class="nav-link">КОНТАКТИ</a></li>
@@ -141,17 +136,8 @@
               <ul class="list-unstyled">
                 <li><a href="{% url 'user_app:home_view' %}">Головна</a></li>
                 <li><a href="{% url 'user_app:admin_view' %}">Адміністрація</a></li>
-                {% comment %}
-                <li><a href="#">Послуги</a></li>
-                <li><a href="#">Вакансії</a></li>
-                <li><a href="#">Документи</a></li>
-                {% endcomment %}
                   <li><a href="{% url 'user_app:document_view' %}">Статут</a></li>
-                <li><a href="{% url 'user_app:blogs_view' %}">Новини</a></li>
-                {% comment %}
-                  <li><a href="#">Публічні закупівлі</a></li>
-                  <li><a href="#">Антикорупційна програма</a></li>
-                {% endcomment %}
+                <li><a href="{% url 'user_app:blogs_view' slug="novini" %}">Новини</a></li>
                 <li><a href="{% url 'user_app:contact_view' %}">Контакти</a></li>
               </ul>
             </div>
@@ -170,11 +156,11 @@
               {% get_blogs as blogs %}
                 {% for blog in blogs %}
               <div class="block-21 mb-4 d-flex">
-                <a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}" class="blog-img mr-4" style="background-image: url({{ blog.image.url }});"></a>
+                <a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}" class="blog-img mr-4" style="background-image: url({{ blog.image.url }});"></a>
                 <div class="text">
-                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}">{{ blog.title }}</a></h3>
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}">{{ blog.title }}</a></h3>
                   <div class="meta">
-                      <div><a href="{% url 'user_app:blog_single_view' id=blog.id slug=blog.slug %}"> {{ blog.create|date:'d.m.Y' }}</a></div>
+                      <div><a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}"> {{ blog.create|date:'d.m.Y' }}</a></div>
                   </div>
                 </div>
               </div>

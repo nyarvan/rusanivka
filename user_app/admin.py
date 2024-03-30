@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Department, Doctor, Administration, Blog, BlogImage, Contact, Document
+from .models import Department, Doctor, Administration, CategoryBlog, Blog, BlogImage, Contact, Document
 
 
 @admin.register(Department)
@@ -32,12 +32,20 @@ class BlogImageAdmin(admin.TabularInline):
     raw_id_fields = ['blog', ]
 
 
+@admin.register(CategoryBlog)
+class CategoryBlogAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug']
+    list_display_links = ['title', ]
+    prepopulated_fields = {'slug': ('title', ), }
+
+
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'image', 'create']
+    list_display = ['category', 'title', 'slug', 'image', 'create']
     list_editable = ['image', ]
+    list_filter = ['category', ]
     list_display_links = ['title', ]
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('title',), }
     search_fields = ['title', 'text']
     inlines = [BlogImageAdmin, ]
 

@@ -1,6 +1,4 @@
 from django.db import models
-from os import path
-from uuid import uuid4
 from django.urls import reverse
 from pytils.translit import slugify
 
@@ -22,7 +20,7 @@ class Department(models.Model):
         return f'{self.name}'
 
     def get_absolute_url(self):
-        return reverse('user_app:ambulant_view', kwargs={'id': self.id})
+        return reverse('user_app:ambulant_view', kwargs={'id': self.id, })
 
 
 class Doctor(models.Model):
@@ -40,7 +38,7 @@ class Doctor(models.Model):
         ordering = ('department', '-is_manager', 'is_visible')
 
     def get_absolute_url(self):
-        return reverse('user_app:ambulant_view', kwargs={'id': self.department.id})
+        return reverse('user_app:ambulant_view', kwargs={'id': self.department.id, })
 
     def __str__(self):
         return f'{self.name}'
@@ -56,17 +54,42 @@ class Administration(models.Model):
     phone = models.CharField(max_length=25)
 
     class Meta:
-        ordering = ('position',)
+        ordering = ('position', )
 
     def get_absolute_url(self):
-        return reverse('user_app:admin_view', kwargs={'id': self.id})
+        return reverse('user_app:admin_view', kwargs={'id': self.id, })
 
     def __str__(self):
         return f'{self.name}'
 
 
+class CategoryBlog(models.Model):
+
+    title = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, db_index=True)
+
+    class Meta:
+        ordering = ('id', )
+        index_together = (('id', 'slug'),)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(CategoryBlog, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('user_app:blogs_view', kwargs={'slug': self.slug, })
+
+    def __str__(self):
+        return f'{self.title}'
+
+
+
 class Blog(models.Model):
 
+    def get_default_category():
+        return CategoryBlog.objects.get(slug='novini')
+
+    # category = models.ForeignKey(CategoryBlog, on_delete=models.CASCADE, default=get_default_category)
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     image = models.ImageField(upload_to='images/blogs', default='images/doctors/no-image.png')
@@ -74,15 +97,15 @@ class Blog(models.Model):
     create = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('-create',)
-        index_together = (('id', 'slug'),)
+        ordering = ('-create', )
+        index_together = (('id', 'slug'), )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Blog, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('user_app:blog_single_view', kwargs={'slug': self.slug})
+        return reverse('user_app:blog_single_view', kwargs={'slug': self.slug, })
 
     def __str__(self):
         return f'{self.title}'
@@ -101,7 +124,7 @@ class BlogImage(models.Model):
         ordering = ('-blog',)
 
     def get_absolute_url(self):
-        return reverse('user_app:blog_single_view', kwargs={'id': self.id})
+        return reverse('user_app:blog_single_view', kwargs={'id': self.id, })
 
     def __str__(self):
         return f'{self.blog}'
@@ -113,7 +136,7 @@ class Document(models.Model):
     file = models.FileField(upload_to="files/")
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('name', )
 
     def __str__(self):
         return f'{self.name}'

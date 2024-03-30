@@ -1,6 +1,7 @@
+from typing import Any
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, FormView, TemplateView
-from .models import Department, Doctor, Administration, Blog, BlogImage
+from .models import Department, Doctor, Administration, CategoryBlog, Blog, BlogImage
 from .forms import FormContact
 
 
@@ -48,7 +49,12 @@ class BlogsView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Blog.objects.all().order_by('-create')
+        return Blog.objects.filter(category__slug=self.kwargs.get('slug')).order_by('-create')
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['category'] = get_object_or_404(CategoryBlog, slug=self.kwargs.get('slug'))
+        return context
     
 
 class BlogDetailView(DetailView):
@@ -57,7 +63,7 @@ class BlogDetailView(DetailView):
     model = Blog
     
     def get_object(self):
-        return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'))
+        return get_object_or_404(Blog, id=self.kwargs.get('id'), slug=self.kwargs.get('slug'), category__slug=self.kwargs.get('slug_category'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

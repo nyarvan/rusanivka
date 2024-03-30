@@ -41,9 +41,9 @@ class CategoryBlogAdmin(admin.ModelAdmin):
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ['category', 'title', 'slug', 'image', 'create']
+    list_display = ['title', 'slug', 'image', 'create']
     list_editable = ['image', ]
-    list_filter = ['category', ]
+    # list_filter = ['category', ]
     list_display_links = ['title', ]
     prepopulated_fields = {'slug': ('title',), }
     search_fields = ['title', 'text']

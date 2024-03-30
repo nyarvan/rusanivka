@@ -208,5 +208,7 @@ def delete_depart(request, pk):
 @login_required(login_url="/login/")
 @user_passes_test(is_manager)
 def delete_blog(request, pk):
-    Blog.objects.get(pk=pk).delete()
-    return redirect('user_app:blogs_view')
+    blog = Blog.objects.get(pk=pk)
+    slug = blog.slug
+    blog.delete()
+    return redirect('user_app:blogs_view', slug=slug)

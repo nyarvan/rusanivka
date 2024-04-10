@@ -152,7 +152,7 @@ class BlogsView(ListView):
             queryset: Blogs ordered by their creation date.
         """
         return Blog.objects.filter(
-            category__slug=self.kwargs.get('slug')).order_by('-created')
+            category__slug=self.kwargs.get('slug')).order_by('-create')
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         """

@@ -77,12 +77,14 @@
                     {% endfor %}
                   </div>
                 </div>
+                {% comment %}
                 <div class="dropdown">
                   <button class="dropbtn">ДОКУМЕНТИ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
                     <a href="{% url 'user_app:document_view' %}">СТАТУТ</a>
                   </div>
                 </div>
+                {% endcomment %}
                 <div class="dropdown">
                     <button class="dropbtn">БЕЗБАР’ЄРНІСТЬ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
@@ -136,7 +138,9 @@
               <ul class="list-unstyled">
                 <li><a href="{% url 'user_app:home_view' %}">Головна</a></li>
                 <li><a href="{% url 'user_app:admin_view' %}">Адміністрація</a></li>
-                  <li><a href="{% url 'user_app:document_view' %}">Статут</a></li>
+                {% comment %}
+                <li><a href="{% url 'user_app:document_view' %}">Статут</a></li>
+                {% endcomment %}
                 <li><a href="{% url 'user_app:blogs_view' slug="novini" %}">Новини</a></li>
                 <li><a href="{% url 'user_app:contact_view' %}">Контакти</a></li>
               </ul>

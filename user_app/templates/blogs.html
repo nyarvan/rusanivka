@@ -18,6 +18,50 @@
       </div>
     </section>
 
+    {% if not blogs %}
+    <div class="container">
+      <div class="section-title text-center">
+        <h2 class="mt-4">
+          Готуємо оновлення: новини незабаром!
+        </h2>
+      </div>
+      <div class="section-title text-center mt-4">
+        <img src="{% static 'images/Not Found.png'%}">
+      </div>
+      <section class="ftco-section">
+        <div class="container">
+          <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-8 text-center heading-section ftco-animate">
+              <span class="subheading">Перегляньте останні новини</span>
+            </div>
+          </div>
+          <div class="row">
+            {% get_blogs as recent_blogs %}
+                      {% for blog in recent_blogs %}
+            <div class="col-md-4 ftco-animate">
+              <div class="blog-entry">
+                <a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}" class="block-20" style="background-image: url({{ blog.image.url }});">
+                  <div class="meta-date text-center p-2">
+                    <span class="day">{{ blog.create|date:'d.m.Y' }}</span>
+                  </div>
+                </a>
+                <div class="text bg-white p-4">
+                  <h3 class="heading"><a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}">{{ blog.title }}</a></h3>
+                    {% if blog.text %}
+                  <p>{{ blog.text|slice:'200'|replace:'\n' }}{% if blog.text|length > 200 %}....{% endif %}</p>
+                    {% endif %}
+                  <div class="d-flex align-items-center mt-4">
+                    <p class="mb-0"><a href="{% url 'user_app:blog_single_view' slug_category=blog.category.slug id=blog.id slug=blog.slug %}" class="btn btn-primary">Детальніше</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+                      {% endfor %}
+          </div>
+        </div>
+      </section>
+    </div>
+      {% else %}
     <section class="ftco-section bg-light">
 			<div class="container">
 				<div class="row">
@@ -51,11 +95,11 @@
                 <li><a href="?page={{ page_obj.previous_page_number }}"><img src="{% static 'images/prev.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
                   {% endif %}
               {% for page in page_obj.paginator.page_range %}
-                {% if page == page_obj.number %}
-                  <li class="active"><span>{{ page }}</span></li>
-                {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
-                  <li><a href="?page={{ page }}">{{ page }}</a></li>
-                {% endif %}
+                  {% if page == page_obj.number %}
+                <li class="active"><span>{{ page }}</span></li>
+                  {% elif page > page_obj.number|add:-3 and page < page_obj.number|add:3 %}
+                <li><a href="?page={{ page }}">{{ page }}</a></li>
+                  {% endif %}
               {% endfor %}
               {% if page_obj.has_next %}
                 <li><a href="?page={{ page_obj.next_page_number }}"><img src="{% static 'images/next.png' %}" width="30%" height="30%" style="margin-bottom: 10%"></a></li>
@@ -64,6 +108,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
         {% endif %}
             {% if 'manager' in user.groups.all.0.name %}
                 <div class="section-title text-center">

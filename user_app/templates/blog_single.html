@@ -78,7 +78,11 @@
 
 {% block additional_scripts %}
 <script type="module">
+  {% if blog.file %}
   var url = '{{ blog.file.url }}';
+  {% else %}
+  var url = ''
+  {% endif %}
   let indexOfQuestionMark = url.indexOf('?');
 
   if (indexOfQuestionMark !== -1) {

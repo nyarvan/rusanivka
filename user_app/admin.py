@@ -128,8 +128,8 @@ class BlogAdmin(admin.ModelAdmin):
         inlines (list): The list of inline classes to include
         in the admin interface.
     """
-    list_display = ['category', 'title', 'slug', 'image', 'create']
-    list_editable = ['image', ]
+    list_display = ['category', 'title', 'slug', 'image', 'file', 'create']
+    list_editable = ['image', 'file']
     list_filter = ['category', ]
     list_display_links = ['title', ]
     prepopulated_fields = {'slug': ('title',), }

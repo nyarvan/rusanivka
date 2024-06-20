@@ -239,7 +239,8 @@ class Blog(models.Model):
     title = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True)
     image = models.ImageField(
-        upload_to='images/blogs', default='images/doctors/no-image.png')
+        null=True, upload_to='images/blogs', default='images/doctors/no-image.png')
+    file = models.FileField(null=True, upload_to='files/blogs')
     text = models.TextField(blank=True)
     create = models.DateTimeField(auto_now_add=True)
 

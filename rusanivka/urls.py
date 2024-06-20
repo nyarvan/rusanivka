@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import logging
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -23,26 +24,30 @@ from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticViewSitemap, DepartmentSitemap, BlogSitemap
 
 
-urlpatterns = [
-    path('registration/', registration_view, name='registration'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_view, name='logout'),
+try:
+    urlpatterns = [
+        path('registration/', registration_view, name='registration'),
+        path('login/', login_view, name='login'),
+        path('logout/', logout_view, name='logout'),
 
-    path('admin/', admin.site.urls),
-    path('', include('user_app.urls', namespace='user_app')),
-    path('manager/', include('manager.urls')),
+        path('admin/', admin.site.urls),
+        path('', include('user_app.urls', namespace='user_app')),
+        path('manager/', include('manager.urls')),
 
-    path('sitemap.xml', sitemap, {
-        'sitemaps': {
-            'static': StaticViewSitemap,
-            'departments': DepartmentSitemap,
-            'blogs': BlogSitemap
-        }
-    }, name='django.contrib.sitemaps.views.sitemap1'),
-    path('robots.txt', TemplateView.as_view(
-        template_name="robots.txt", content_type="text/plain")),
+        path('sitemap.xml', sitemap, {
+            'sitemaps': {
+                'static': StaticViewSitemap,
+                'departments': DepartmentSitemap,
+                'blogs': BlogSitemap
+            }
+        }, name='django.contrib.sitemaps.views.sitemap1'),
+        path('robots.txt', TemplateView.as_view(
+            template_name="robots.txt", content_type="text/plain")),
 
-]
+    ]
+except Exception as e:
+    urlpatterns = []
+
 
 if settings.DEBUG:
     urlpatterns += static(

@@ -32,7 +32,7 @@
                 <button id="next" class="next-doc-page">Вперед</button>
                 <span>Сторінка: <span id="page_num"></span> / <span id="page_count"></span></span>
               </div>
-              <canvas id="the-canvas"></canvas>
+              <canvas id="the-canvas" class="doc-viewer"></canvas>
               {% else %}
                 <img class="d-block w-100" src="{{ blog.image.url }}">
                 {% for image in images %}

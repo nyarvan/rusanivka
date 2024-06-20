@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('create', models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'ordering': ('-create',),
+                'ordering': ('-create', 'category'),
                 'index_together': {('id', 'slug')},
             },
         ),

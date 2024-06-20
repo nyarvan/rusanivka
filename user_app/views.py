@@ -124,6 +124,45 @@ class DepartmentView(ListView):
         return context
 
 
+class DrugsView(TemplateView):
+    """
+    DrugsView displays the drugs.html template.
+
+    This class is used to handle requests related to displaying the page
+    with information about drugs. It inherits from TemplateView, making it
+    easy to render an HTML template.
+
+    Attributes:
+    ----------
+    template_name : str
+        The name of the template to be rendered.
+
+    Methods:
+    -------
+    get_context_data(**kwargs):
+        Returns the context data to be used in the drugs.html template.
+    """
+
+    template_name = 'drugs.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Gets the context data to be used in the template.
+
+        Parameters:
+        ----------
+        **kwargs : dict
+            Additional context parameters.
+
+        Returns:
+        ----------
+        dict
+            The context data for the template.
+        """
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 class BlogsView(ListView):
     """
     A view to display a list of blogs filtered by category.

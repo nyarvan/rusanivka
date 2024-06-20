@@ -77,14 +77,12 @@
                     {% endfor %}
                   </div>
                 </div>
-                {% comment %}
                 <div class="dropdown">
-                  <button class="dropbtn">ДОКУМЕНТИ <img src="{% static 'images/down.png' %}"></button>
+                  <button class="dropbtn">Інформація для клієнтів <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
-                    <a href="{% url 'user_app:document_view' %}">СТАТУТ</a>
+                    <a href="{% url 'user_app:drugs_view' %}">Лікарські засоби</a>
                   </div>
                 </div>
-                {% endcomment %}
                 <div class="dropdown">
                     <button class="dropbtn">БЕЗБАР’ЄРНІСТЬ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">

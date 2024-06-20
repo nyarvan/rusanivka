@@ -35,7 +35,6 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(db_index=True, max_length=100)),
                 ('slug', models.SlugField(max_length=100)),
                 ('image', models.ImageField(default='images/doctors/no-image.png', null=True, upload_to='images/blogs')),
-                ('file', models.FileField(null=True, upload_to='files/blogs')),
                 ('text', models.TextField(blank=True)),
                 ('create', models.DateTimeField(auto_now_add=True)),
             ],

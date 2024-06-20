@@ -209,7 +209,7 @@ class FormBlog(forms.ModelForm):
 
     image = forms.FileField()
 
-    text = forms.CharField(widget=forms.Textarea(attrs={
+    text = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'class': "form-control",
         'rows': "25",
         'placeholder': "Enter blog content",

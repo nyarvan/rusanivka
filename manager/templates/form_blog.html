@@ -21,12 +21,24 @@
               <div class="form-group">
                   <p><b>Категорія: </b> {{ form.category }}</p>
               </div>
+              <div class="form-group d-flex justify-content-around">
+                <button type="button" class="btn-fixed-size btn btn-primary" id="btn-photo">Фотографія</button>
+                <button type="button" class="btn-fixed-size btn btn-primary" id="btn-file">Файл</button>
+              </div>
+            <div id="photo-section1">
               <div class="form-group">
                   <p><b>Фотографія:</b> {{ form.image }}</p>
               </div>
+            </div>
+            <div id="file-section" class="d-none">
+              <div class="form-group">
+                <p><b>Файл:</b> {{ form.file }}</p>
+              </div>
+            </div>
               <div class="form-group">
                 <p><b>Текст: </b> {{ form.text }}</p>
               </div>
+            <div id="photo-section2">
               {% with named_formsets.images as formset %}  
                   {{ formset.management_form }}
                 <script type="text/html" id="images-template">
@@ -69,6 +81,7 @@
                     </a>
                 </div>
               </div>
+            </div>
               <div class="form-group">
                 {% if not blog %}
                   <input type="submit" value="Створити" class="btn btn-primary py-3 px-5">
@@ -85,4 +98,27 @@
 
     <script type="text/javascript" src="{% static 'js/jquery-3.6.3.slim.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    {% block additional_scripts %}
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+          const btnPhoto = document.getElementById('btn-photo');
+          const btnFile = document.getElementById('btn-file');
+          const photoSection1 = document.getElementById('photo-section1');
+          const photoSection2 = document.getElementById('photo-section2');
+          const fileSection = document.getElementById('file-section');
+
+          btnPhoto.addEventListener('click', function () {
+              photoSection1.classList.remove('d-none');
+              photoSection2.classList.remove('d-none');
+              fileSection.classList.add('d-none');
+          });
+
+          btnFile.addEventListener('click', function () {
+              fileSection.classList.remove('d-none');
+              photoSection1.classList.add('d-none');
+              photoSection2.classList.add('d-none');
+          });
+      });
+    </script>
+    {% endblock additional_scripts %}
 {% endblock%}

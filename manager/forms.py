@@ -207,7 +207,8 @@ class FormBlog(forms.ModelForm):
         'class': "form-control", 'placeholder': "Enter title",
     }))
 
-    image = forms.FileField()
+    image = forms.FileField(required=False)
+    file = forms.FileField(required=False)
 
     text = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'class': "form-control",
@@ -227,7 +228,27 @@ class FormBlog(forms.ModelForm):
 
         """
         model = Blog
-        fields = ('category', 'title', 'image', 'text')
+        fields = ('category', 'title', 'image', 'file', 'text')
+
+    def clean(self):
+        """
+        Performs additional validation and processing of the form data.
+
+        If a file is uploaded but no image is provided, this method
+        automatically sets the default image as defined in the model.
+
+        Returns the cleaned form data with any necessary modifications.
+
+        :return: dict
+        """
+        cleaned_data = super().clean()
+        image = cleaned_data.get('image')
+        file = cleaned_data.get('file')
+
+        if file and not image:
+            cleaned_data['image'] = self._meta.model._meta.get_field('image').get_default()
+
+        return cleaned_data
 
 
 class FormBlogImage(forms.ModelForm):

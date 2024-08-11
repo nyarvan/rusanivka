@@ -8495,6 +8495,13 @@ h1, h2, h3, h4, h5,
   color: #046df4;
   border-bottom: 4px solid #4394fc; }
 
+.btn-fixed-size {
+  margin-right: 3px;
+  width: 350px;
+  height: 50px;
+  border-radius: 0%;
+}
+
 .img-2 {
   background-position: top center !important; }
   @media (max-width: 767.98px) {

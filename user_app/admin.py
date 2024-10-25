@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Department, Doctor, Administration, CategoryBlog, Blog, \
-                        BlogImage, Contact, Document
+                        BlogImage, Contact
 
 
 @admin.register(Department)

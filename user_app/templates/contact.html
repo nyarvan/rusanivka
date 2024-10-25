@@ -22,24 +22,67 @@
 			<div class="container">
 				<div class="row d-flex align-items-stretch no-gutters">
 					<div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
-						<form method="post">
-                            {% csrf_token %}
+            <form method="post">
+              {% csrf_token %}
               <div class="form-group">
-                {{ form.name }}
+                  
+                  {{ form.name }}
+                  {% if form.name.errors %}
+                      <div class="invalid-feedback">
+                          {% for error in form.name.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
               </div>
               <div class="form-group">
-                {{ form.email }}
+                  
+                  {{ form.phone_number }}
+                  {% if form.phone_number.errors %}
+                      <div class="invalid-feedback">
+                          {% for error in form.phone_number.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
               </div>
               <div class="form-group">
-                {{ form.subject }}
+                  
+                  {{ form.email }}
+                  {% if form.email.errors %}
+                      <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
               </div>
               <div class="form-group">
-                {{ form.message }}
+                  
+                  {{ form.subject }}
+                  {% if form.subject.errors %}
+                      <div class="invalid-feedback">
+                          {% for error in form.subject.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
               </div>
               <div class="form-group">
-                <input type="submit" value="Надіслати повідомлення" class="btn btn-primary py-3 px-5">
+                  
+                  {{ form.message }}
+                  {% if form.message.errors %}
+                      <div class="invalid-feedback">
+                          {% for error in form.message.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                  {% endif %}
               </div>
-            </form>
+              <div class="form-group">
+                  <input type="submit" value="Надіслати повідомлення" class="btn btn-primary py-3 px-5">
+              </div>
+          </form>
 					</div>
 					<div class="col-md-6 d-flex align-items-stretch">
 						<div id="map"></div>

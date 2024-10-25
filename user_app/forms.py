@@ -14,20 +14,20 @@ class FormContact(forms.ModelForm):
     """
 
     name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={
-        'class': "form-control", 'placeholder': "Enter your name",
+        'class': "form-control", 'placeholder': "ПІБ",
     }))
 
     email = forms.EmailField(widget=forms.TextInput(attrs={
-        'class': "form-control", 'placeholder': "Enter your email",
+        'class': "form-control", 'placeholder': "Email",
     }))
 
     subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={
-        'class': "form-control", 'placeholder': "Enter the subject",
+        'class': "form-control", 'placeholder': "Тема",
     }))
 
     message = forms.CharField(widget=forms.Textarea(attrs={
         'cols': "30", 'rows': "7",
-        'class': "form-control", 'placeholder': "Enter your message",
+        'class': "form-control", 'placeholder': "Повідомлення",
     }))
 
     class Meta:

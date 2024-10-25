@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from pytils.translit import slugify
+from django.core.validators import RegexValidator
 
 
 class Department(models.Model):
@@ -381,6 +382,16 @@ class Contact(models.Model):
 
     name = models.CharField(max_length=50)
     email = models.EmailField()
+    phone_number = models.CharField(
+        max_length=13,
+        validators=[
+            RegexValidator(
+                regex=r'^\+380\d{9}$',
+                message="Номер телефону повинен бути в форматі +380XXXXXXXXX"
+            )
+        ],
+        help_text="Введіть номер телефону в форматі: '+380XXXXXXXXX'."
+    )
     subject = models.CharField(max_length=100)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)

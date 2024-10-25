@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from pytils.translit import slugify
-from django.core.validators import RegexValidator
+import re
 
 
 class Department(models.Model):
@@ -336,37 +336,6 @@ class BlogImage(models.Model):
         return f'{self.blog}'
 
 
-class Document(models.Model):
-    """
-    Model representing a document.
-
-    Attributes:
-        name (str): The name of the document.
-        file (File): The file field storing the document file.
-    """
-
-    name = models.CharField(max_length=50)
-    file = models.FileField(upload_to="files/")
-
-    class Meta:
-        """
-        Meta options for the Document model.
-
-        Attributes:
-            ordering (tuple): The default ordering for queryset results.
-        """
-        ordering = ('name', )
-
-    def __str__(self):
-        """
-        Return a string representation of the document.
-
-        Returns:
-            str: The string representation.
-        """
-        return f'{self.name}'
-
-
 class Contact(models.Model):
     """
     Model representing a contact form submission.
@@ -374,6 +343,7 @@ class Contact(models.Model):
     Attributes:
         name (str): The name of the contact.
         email (Email): The email address of the contact.
+        phone_number (Phone): The phone number of the contact.
         subject (str): The subject of the message.
         message (str): The message content.
         date (DateTime): The date and time of the submission.
@@ -383,19 +353,60 @@ class Contact(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phone_number = models.CharField(
-        max_length=13,
-        validators=[
-            RegexValidator(
-                regex=r'^\+380\d{9}$',
-                message="Номер телефону повинен бути в форматі +380XXXXXXXXX"
-            )
-        ],
-        help_text="Введіть номер телефону в форматі: '+380XXXXXXXXX'."
+        null=True,
+        max_length=18,
+        help_text="Введіть номер телефону в форматі: '+38(0XX) XXX XX-XX'."
     )
     subject = models.CharField(max_length=100)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     is_processing = models.BooleanField(default=False)
+
+    def clean(self):
+        """
+        Clean and format the phone number before saving it to the database.
+
+        This method removes all non-numeric characters from the phone number
+        and checks if it starts with '0' and contains exactly 10 digits.
+        If so, it adds the country code '38' to the beginning of the number,
+        transforming it into a 12-digit format. The final format of
+        the phone number will be '+38(0XX) XXX XX-XX'.
+
+        Raises:
+            ValidationError: If the cleaned phone number does not have
+            the expected format or length.
+
+        Returns:
+            None
+        """
+        phone_cleaned = re.sub(r'\D', '', self.phone_number)
+
+        if phone_cleaned.startswith('0') and len(phone_cleaned) == 10:
+            phone_cleaned = '38' + phone_cleaned
+
+        if len(phone_cleaned) != 12 or not phone_cleaned.startswith('38'):
+            return
+
+        self.phone_number = f'+38(0{phone_cleaned[3:5]}) {phone_cleaned[5:8]} {phone_cleaned[8:10]}-{phone_cleaned[10:]}'
+
+    def save(self, *args, **kwargs):
+        """
+        Override the save method to include custom validation before saving.
+
+        This method calls the `clean` method to ensure the phone number is
+        properly formatted before saving the instance to the database.
+        After validation, it calls the parent class's save method to
+        perform the actual save operation.
+
+        Parameters:
+            *args: Positional arguments to be passed to the parent save method.
+            **kwargs: Keyword arguments to be passed to the parent save method.
+
+        Returns:
+            None
+        """
+        self.clean()
+        super(Contact, self).save(*args, **kwargs)
 
     class Meta:
         """

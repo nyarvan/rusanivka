@@ -51,7 +51,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><img src="{% static 'images/telephone.png' %}" height="50%" width="50%"></div>
-						    <p><span>Телефон:</span> <a href="tel://044 295 39 49">+38(044)-295-39-49</a></p>
+						    <p><span>Телефон:</span> <a href="tel://044 295 39 49">+38(044)-295-66-58</a></p>
 					    </div>
 				    </div>
 			    </div>
@@ -124,7 +124,7 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="text">Адреса: <b>м. Київ, вул. Ентузіастів, 49</b></span></li>
-                      <li><span class="text">Тел: <b>+38(044)-295-39-49</b></span></li>
+                      <li><span class="text">Тел: <b>+38(044)-295-66-58</b></span></li>
                       <li><span class="text">Email: <b>psl_rusanivka_golovna@ukr.net</b></span></li>
 	              </ul>
 	            </div>
@@ -213,6 +213,15 @@
   <script src="{% static "js/main.js" %}"></script>
   <script src="{% static "js/carousel.js" %}"></script>
   <script src="https://mozilla.github.io/pdf.js/build/pdf.mjs" type="module"></script>
-  {% block additional_scripts %}{% endblock %}  
+  {% block additional_scripts %}{% endblock %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var modal = document.getElementById('successModal');
+      if (modal) {
+        var modalInstance = new bootstrap.Modal(modal);
+        modalInstance.show();
+      }
+    });
+  </script>  
   </body>
 </html>

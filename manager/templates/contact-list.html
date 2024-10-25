@@ -22,26 +22,26 @@
         <div class="container">
             <div class="col-md-10 col-md-offset-1">
                 {% for item in contacts %}
-                    <div class="row">
-                        <div class="col-md-3">
-                            <a href="{% url 'update_contact' pk=item.pk %}">
-                                <button type="button" class="btn btn-primary btn-sm">Закрити повідомлення</button>
-                            </a>
-                        </div>
-                        <div class="col-md-3">{{ item.name }}</div>
-                        <div class="col-md-3">{{ item.email }}</div>
-                        <div class="col-md-3">{{ item.subject }}</div>
+                  <div class="row">
+                    <div class="col-md-3">
+                        <a href="{% url 'update_contact' pk=item.pk %}">
+                            <button type="button" class="btn btn-primary btn-sm">Закрити повідомлення</button>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-9"><p>{{ item.message }}</p></div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3">
-                        {{ item.date|date:"j.m.Y H:i" }}
-                      </div>
-                    </div>
-                    <hr/>
+                    <div class="col-md-3">Імʼя - {{ item.name }}</div>
+                    <div class="col-md-3">Email - {{ item.email }}</div>
+                    <div class="col-md-3">Телефон - {{ item.phone_number }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Тема - {{ item.subject }}</div>
+                    <div class="col-md-9"><p>Повідомлення - {{ item.message }}</p></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    {{ item.date|date:"j.m.Y H:i" }}
+                  </div>
+                </div>
+                <hr/>
                 {% endfor %}
             </div>
         </div>

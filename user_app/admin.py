@@ -176,7 +176,10 @@ class ContactAdmin(admin.ModelAdmin):
         search_fields (list): The list of fields to search by
         in the admin interface.
     """
-    list_display = ['name', 'email', 'subject', 'date', 'is_processing']
+    list_display = [
+        'name', 'email', 'phone_number', 
+        'subject', 'date', 'is_processing'
+    ]
     list_filter = ['date', 'is_processing']
     list_editable = ['is_processing', ]
-    search_fields = ['name', 'email']
+    search_fields = ['name', 'email', 'phone_number']

@@ -1,5 +1,7 @@
 from typing import Any
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .models import Department, Doctor, Administration, CategoryBlog, Blog, BlogImage
 from .forms import FormContact
@@ -268,7 +270,7 @@ class ContactView(FormView):
 
     form_class = FormContact
     template_name = 'contact.html'
-    success_url = '/'
+    success_url = reverse_lazy('user_app:home_view')
 
     def form_valid(self, form):
         """
@@ -283,15 +285,8 @@ class ContactView(FormView):
             the form data.
         """
         form.save()
+        user_name = form.cleaned_data.get('name')
+        messages.success(
+            self.request, f'Дякуємо, {user_name}! Ваше повідомлення успішно відправлене, наш адміністратор звʼяжеться з вами найближчим часом.'
+        )
         return super(ContactView, self).form_valid(form)
-
-
-class DocumentView(TemplateView):
-    """
-    A view to display a document template.
-
-    Attributes:
-        template_name (str): The template to render for this view.
-    """
-
-    template_name = 'statut.html'

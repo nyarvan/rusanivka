@@ -336,37 +336,6 @@ class BlogImage(models.Model):
         return f'{self.blog}'
 
 
-class Document(models.Model):
-    """
-    Model representing a document.
-
-    Attributes:
-        name (str): The name of the document.
-        file (File): The file field storing the document file.
-    """
-
-    name = models.CharField(max_length=50)
-    file = models.FileField(upload_to="files/")
-
-    class Meta:
-        """
-        Meta options for the Document model.
-
-        Attributes:
-            ordering (tuple): The default ordering for queryset results.
-        """
-        ordering = ('name', )
-
-    def __str__(self):
-        """
-        Return a string representation of the document.
-
-        Returns:
-            str: The string representation.
-        """
-        return f'{self.name}'
-
-
 class Contact(models.Model):
     """
     Model representing a contact form submission.

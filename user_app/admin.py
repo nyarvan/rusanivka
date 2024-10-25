@@ -137,27 +137,6 @@ class BlogAdmin(admin.ModelAdmin):
     inlines = [BlogImageAdmin, ]
 
 
-@admin.register(Document)
-class DocumentAdmin(admin.ModelAdmin):
-    """
-    Document class for admin interface.
-
-    This class defines the appearance and behavior of the Document model
-    in the Django admin interface.
-
-    Attributes:
-        list_display (list): The list of fields to display
-        in the admin list view.
-        list_filter (list): The list of fields to filter by
-        in the admin list view.
-        list_editable (list): The list of fields that can be edited directly
-        in the admin list view.
-    """
-    list_display = ['name', 'file']
-    list_filter = ['name', ]
-    list_editable = ['file', ]
-
-
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     """

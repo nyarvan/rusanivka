@@ -113,7 +113,7 @@ class FormContact(forms.ModelForm):
         if phone_cleaned.startswith('0') and len(phone_cleaned) == 10:
             phone_cleaned = '38' + phone_cleaned
 
-        if not phone_cleaned.startswith('38') or len(phone_cleaned) != 12:
+        if not phone_cleaned.startswith('380') or len(phone_cleaned) != 12:
             self.add_error('phone_number', "Неправильний формат номеру телефону. Використовуйте формат: '+38(0XX) XXX XX-XX'.")
             return phone
 

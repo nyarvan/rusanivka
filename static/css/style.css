@@ -2834,6 +2834,8 @@ input[type="button"].btn-block {
     clip: rect(0, 0, 0, 0);
     pointer-events: none; }
 
+
+
 .input-group {
   position: relative;
   display: -webkit-box;
@@ -8571,6 +8573,48 @@ h1, h2, h3, h4, h5,
       font-size: 18px;
       font-weight: 500;
       text-transform: uppercase; }
+
+      #prev.prev-doc-page {
+        background: none;
+        padding: 0 5%;
+        text-align: center;
+        display: inline-block;
+        border: 1px solid #2f89fc;
+        border-radius: 5%;
+        font-weight: 400;
+        color: #2f89fc;
+        line-height: 40px;
+      }
+      
+      #prev.prev-doc-page:hover {
+        background: #2f89fc;
+        color: #fff;
+        border: 1px solid transparent; 
+      }
+      
+      #next.next-doc-page {
+        background: none;
+        padding: 0 5%;
+        text-align: center;
+        display: inline-block;
+        border: 1px solid #2f89fc;
+        border-radius: 5%;
+        font-weight: 400;
+        color: #2f89fc;
+        line-height: 40px;
+      }
+      
+      #next.next-doc-page:hover {
+        background: #2f89fc;
+        color: #fff;
+        border: 1px solid transparent; 
+      }
+      
+      #next.next-doc-page:active, #prev.prev-doc-page:active {
+        background: #2f89fc;
+        color: #fff;
+        border: 1px solid transparent; 
+      }
 
 .ftco-intro {
   padding: 4em 0;

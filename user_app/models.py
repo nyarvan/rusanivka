@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.urls import reverse
 from pytils.translit import slugify
@@ -226,7 +227,7 @@ class Blog(models.Model):
         create (datetime): The date and time when the blog post was created.
     """
 
-    def get_default_category():
+    def get_default_category(self):
         """
         Helper function to get the default category for a blog post.
 
@@ -234,6 +235,10 @@ class Blog(models.Model):
             CategoryBlog: The default category.
         """
         return CategoryBlog.objects.get(slug='novini')
+
+    def get_filename(self):
+        """Returns the file name with extension, excluding the path."""
+        return os.path.basename(self.file.name)
 
     category = models.ForeignKey(
         CategoryBlog, on_delete=models.CASCADE, default=get_default_category)

@@ -33,7 +33,7 @@
                 <span>Сторінка: <span id="page_num"></span> / <span id="page_count"></span></span>
               </div>
               <canvas id="the-canvas" class="doc-viewer"></canvas>
-              <a href="{{ blog.file.url }}" class="btn btn-primary">Завантажити {{ blog.get_filename }}</a>
+              <a href="{{ blog.file.url }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Завантажити {{ blog.get_filename }}</a>
               {% else %}
                 <img class="d-block w-100" src="{{ blog.image.url }}">
                 {% for image in images %}

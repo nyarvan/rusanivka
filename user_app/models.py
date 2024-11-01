@@ -227,7 +227,7 @@ class Blog(models.Model):
         create (datetime): The date and time when the blog post was created.
     """
 
-    def get_default_category(self):
+    def get_default_category():
         """
         Helper function to get the default category for a blog post.
 

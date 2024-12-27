@@ -163,6 +163,50 @@ class DrugsView(TemplateView):
         """
         context = super().get_context_data(**kwargs)
         return context
+    
+
+class MedicalServicesView(TemplateView):
+
+    template_name = 'medical_services.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Gets the context data to be used in the template.
+
+        Parameters:
+        ----------
+        **kwargs : dict
+            Additional context parameters.
+
+        Returns:
+        ----------
+        dict
+            The context data for the template.
+        """
+        context = super().get_context_data(**kwargs)
+        return context
+    
+
+class FreeMedicalServicesView(TemplateView):
+    
+    template_name = 'free_medical_services.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Gets the context data to be used in the template.
+
+        Parameters:
+        ----------
+        **kwargs : dict
+            Additional context parameters.
+
+        Returns:
+        ----------
+        dict
+            The context data for the template.
+        """
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 class BlogsView(ListView):

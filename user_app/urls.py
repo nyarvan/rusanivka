@@ -1,7 +1,6 @@
 from django.urls import path
 from .views import HomepageView, AdministrationView, DepartmentView, \
-                    BlogsView, BlogDetailView, ContactView, DrugsView, \
-                    MedicalServicesView, FreeMedicalServicesView
+                    BlogsView, BlogDetailView, ContactView, DrugsView
 
 app_name = 'user_app'
 

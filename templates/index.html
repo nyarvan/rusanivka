@@ -81,8 +81,8 @@
                   <button class="dropbtn">ІНФОРМАЦІЯ ДЛЯ КЛІЄНТІВ <img src="{% static 'images/down.png' %}"></button>
                   <div class="dropdown-content">
                     <a href="{% url 'user_app:drugs_view' %}">ЛІКАРСЬКІ ЗАСОБИ</a>
-                    <a href="{% url 'user_app:free_medical_services' %}">БЕЗОПЛАТНІ МЕДИЧНІ ПОСЛУГИ</a>
-                    <a href="{% url 'user_app:medical_services' %}">ПЛАТНІ МЕДИЧНІ ПОСЛУГИ</a>
+                    <a href="{% url 'user_app:blogs_view' slug='bezoplatn-medichn-poslugi' %}">БЕЗОПЛАТНІ МЕДИЧНІ ПОСЛУГИ</a>
+                    <a href="{% url 'user_app:blogs_view' slug='platn-medichn-poslugi' %}">ПЛАТНІ МЕДИЧНІ ПОСЛУГИ</a>
                   </div>
                 </div>
                 <div class="dropdown">

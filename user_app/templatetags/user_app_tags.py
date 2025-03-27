@@ -37,4 +37,4 @@ def get_blog_category_for_menu():
         QuerySet: All blog categories ordered by their IDs, with only
     'title' and 'slug' fields included.
     """
-    return CategoryBlog.objects.all().order_by('id').values('title', 'slug')
+    return CategoryBlog.objects.exclude(slug__in=['bezoplatn-medichn-poslugi', 'platn-medichn-poslugi', 'zakupvl']).order_by('id').values('title', 'slug')

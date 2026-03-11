@@ -42,6 +42,7 @@ def get_blog_category_for_menu():
             'bezoplatn-medichn-poslugi',
             'platn-medichn-poslugi',
             'zakupvl',
-            'novini'
+            'novini',
+            'nakazi-zakladu'
         ]
     ).order_by('id').values('title', 'slug')

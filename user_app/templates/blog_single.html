@@ -80,7 +80,7 @@
 {% block additional_scripts %}
 <script type="module">
   {% if blog.file %}
-  var url = '{{ blog.file.url }}';
+  var url = '{{ blog.file.url|safe }}';
   {% else %}
   var url = ''
   {% endif %}

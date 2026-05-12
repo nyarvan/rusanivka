@@ -93,7 +93,7 @@
 
         var { pdfjsLib } = globalThis;
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.min.mjs';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.worker.min.mjs';
 
         var pdfDoc = null,
             pageNum = 1,

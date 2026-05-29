@@ -133,7 +133,7 @@ class Administration(models.Model):
         default='images/doctors/no-image.png')
     post = models.CharField(max_length=50)
     schedule = models.TextField(blank=True)
-    phone = models.CharField(max_length=25)
+    phone = models.CharField(max_length=25, null=True, blank=True)
 
     class Meta:
         """

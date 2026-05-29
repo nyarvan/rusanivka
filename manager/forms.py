@@ -38,10 +38,6 @@ class FormAdministration(forms.ModelForm):
         'placeholder': "Enter work schedule",
     }))
 
-    phone = forms.CharField(widget=forms.TextInput(attrs={
-        'class': "form-control", 'placeholder': "Enter phone number",
-    }))
-
     class Meta:
         """
         Metadata options for the FormAdministration form.

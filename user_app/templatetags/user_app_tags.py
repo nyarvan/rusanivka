@@ -1,4 +1,5 @@
 from django import template
+from ..constants import DEFENDER_SLUGS, DEFENDERS_CATEGORIES
 from ..models import Blog, Department, CategoryBlog
 
 register = template.Library()
@@ -44,6 +45,18 @@ def get_blog_category_for_menu():
             'zakupvl',
             'novini',
             'nakazi-zakladu',
-            'statut'
+            'statut',
+            *DEFENDER_SLUGS,
         ]
     ).order_by('id').values('title', 'slug')
+
+
+@register.simple_tag()
+def get_defenders_menu() -> tuple[tuple[str, str], ...]:
+    """
+    Retrieves the categories of the "Defenders" submenu.
+
+    Returns:
+        tuple: (slug, title) pairs in menu order.
+    """
+    return DEFENDERS_CATEGORIES

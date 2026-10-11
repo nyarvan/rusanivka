@@ -104,11 +104,12 @@ class DefendersSeedMigrationTests(TestCase):
 
 
 class DefendersPagesTests(TestCase):
-    def test_every_category_page_shows_seed_post(self) -> None:
+    def test_every_category_link_lands_on_seed_post(self) -> None:
         for slug in DEFENDER_SLUGS:
             with self.subTest(slug=slug):
                 response = self.client.get(
-                    reverse('user_app:blogs_view', kwargs={'slug': slug}))
+                    reverse('user_app:blogs_view', kwargs={'slug': slug}),
+                    follow=True)
                 blog = Blog.objects.get(category__slug=slug)
 
                 self.assertEqual(response.status_code, 200)
@@ -176,13 +177,21 @@ class DefendersManagerControlsTests(TestCase):
         self.client.force_login(self.manager)
 
         detail = self.client.get(detail_url(self.blog))
-        listing = self.client.get(
-            reverse('user_app:blogs_view', kwargs={'slug': DEFENDER_SLUGS[0]}))
 
         self.assertContains(
             detail, reverse('update_blog', kwargs={'pk': self.blog.pk}))
         self.assertContains(
             detail, reverse('delete_blog', kwargs={'pk': self.blog.pk}))
+        self.assertContains(detail, reverse('add_blog'))
+
+    def test_manager_sees_add_button_on_multi_post_listing(self) -> None:
+        self.client.force_login(self.manager)
+        Blog.objects.create(
+            category=self.blog.category, title='Second', text='x')
+
+        listing = self.client.get(
+            reverse('user_app:blogs_view', kwargs={'slug': DEFENDER_SLUGS[0]}))
+
         self.assertContains(listing, reverse('add_blog'))
 
     def test_visitor_does_not_see_manager_controls(self) -> None:
@@ -192,6 +201,7 @@ class DefendersManagerControlsTests(TestCase):
             detail, reverse('update_blog', kwargs={'pk': self.blog.pk}))
         self.assertNotContains(
             detail, reverse('delete_blog', kwargs={'pk': self.blog.pk}))
+        self.assertNotContains(detail, reverse('add_blog'))
 
     def test_manager_can_open_update_form(self) -> None:
         self.client.force_login(self.manager)
@@ -200,3 +210,43 @@ class DefendersManagerControlsTests(TestCase):
             reverse('update_blog', kwargs={'pk': self.blog.pk}))
 
         self.assertEqual(response.status_code, 200)
+
+
+class DefendersRedirectTests(TestCase):
+    @staticmethod
+    def blogs_url(slug: str) -> str:
+        return reverse('user_app:blogs_view', kwargs={'slug': slug})
+
+    def test_single_post_category_redirects_to_the_post(self) -> None:
+        for slug in DEFENDER_SLUGS:
+            with self.subTest(slug=slug):
+                blog = Blog.objects.get(category__slug=slug)
+
+                response = self.client.get(self.blogs_url(slug))
+
+                self.assertRedirects(response, detail_url(blog))
+
+    def test_category_with_several_posts_shows_listing(self) -> None:
+        category = CategoryBlog.objects.get(slug=DEFENDER_SLUGS[0])
+        Blog.objects.create(category=category, title='Second', text='x')
+
+        response = self.client.get(self.blogs_url(DEFENDER_SLUGS[0]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Second')
+
+    def test_empty_category_shows_listing_without_redirect(self) -> None:
+        Blog.objects.filter(category__slug=DEFENDER_SLUGS[0]).delete()
+
+        response = self.client.get(self.blogs_url(DEFENDER_SLUGS[0]))
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_other_category_with_single_post_keeps_listing(self) -> None:
+        category = CategoryBlog.objects.create(title='Other section')
+        Blog.objects.create(category=category, title='Only post', text='x')
+
+        response = self.client.get(self.blogs_url(category.slug))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Only post')

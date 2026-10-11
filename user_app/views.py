@@ -1,10 +1,11 @@
 from typing import Any
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .models import Department, Doctor, Administration, CategoryBlog, Blog, BlogImage
 from .forms import FormContact
+from .constants import DEFENDER_SLUGS
 
 
 class HomepageView(ListView):
@@ -223,6 +224,24 @@ class BlogsView(ListView):
     template_name = 'blogs.html'
     context_object_name = 'blogs'
     paginate_by = 6
+
+    def get(self, request, *args, **kwargs):
+        """
+        Open the only post of a "defenders" category directly.
+
+        Sections listed in DEFENDER_SLUGS hold a single informational page,
+        so a list with one card is skipped. With zero or several posts the
+        regular list is shown, which keeps the manager's "add" button.
+        """
+        slug = self.kwargs.get('slug')
+        if slug in DEFENDER_SLUGS:
+            posts = list(self.get_queryset()[:2])
+            if len(posts) == 1:
+                blog = posts[0]
+                return redirect(
+                    'user_app:blog_single_view',
+                    slug_category=slug, id=blog.id, slug=blog.slug)
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         """

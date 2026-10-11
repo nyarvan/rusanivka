@@ -49,6 +49,9 @@
                    <div class="section-title text-center">
                         <p><a href="{% url 'delete_blog' pk=blog.pk%}">Видалити: <img src="{% static 'images/remove.png' %}"></a></p>
                    </div>
+                   <div class="section-title text-center">
+                        <p><a href="{% url 'add_blog' %}">Додати запис: <img src="{% static 'images/plus.png' %}"></a></p>
+                   </div>
                 {% endif %}
           </div> <!-- .col-md-8 -->
 

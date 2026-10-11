@@ -41,9 +41,7 @@
                 {% endfor %}
               {% endif %}
             </p>
-              {% for text in blog.text|split:'\n' %}
-            <p>{{ text }}</p>
-              {% endfor %}
+            {{ blog.text|linebreaks }}
                {% if 'manager' in user.groups.all.0.name %}
                     <div class="section-title text-center">
                         <p><a href="{% url 'update_blog' pk=blog.pk%}">Редагувати: <img src="{% static 'images/edit.png' %}"></a></p>
